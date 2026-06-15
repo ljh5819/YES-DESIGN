@@ -70,20 +70,20 @@
         nav .menu-item:hover, nav .menu-item.active { color: #E8651E; }
         nav .menu-item:hover::after, nav .menu-item.active::after { width: 100%; }
 
-        /* 페이지 전환을 위한 섹션 제어 스타일 (핵심변경) */
+        /* 페이지 전환을 위한 섹션 제어 스타일 */
         .page-section {
-            display: none; /* 기본적으로 모든 섹션을 숨김 */
+            display: none; 
             animation: fadeIn 0.4s ease-in-out forwards;
         }
         .page-section.active-page {
-            display: block; /* 활성화된 페이지만 표시 */
+            display: block; 
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 하이엔드 무드의 감성 히어로 섹션 (홈 화면 독립화) */
+        /* 하이엔드 무드의 감성 히어로 섹션 */
         .hero { 
             height: calc(100vh - 70px); 
             background: linear-gradient(135deg, #1f1f1f 0%, #0d0d0d 100%);
@@ -192,13 +192,12 @@
         .slider-close:hover { color: #E8651E; }
         .slider-indicator { color: #888; font-family: 'Montserrat'; margin-top: 15px; font-size: 1rem; }
 
-        /* [고객문의 창] 오피스 무드 레이아웃 */
+        /* [고객문의 창] */
         .contact-container { display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; max-width: 1100px; margin: 0 auto; text-align: left; }
         .contact-info { display: flex; flex-direction: column; justify-content: flex-start; padding-top: 1rem; }
         .contact-info p { margin-bottom: 1.8rem; font-size: 1.05rem; color: #555; border-bottom: 1px solid #e8e8e8; padding-bottom: 10px; }
         .contact-info p strong { color: #111; display: inline-block; width: 100px; font-weight: 500; }
         
-        /* 카카오 오픈채팅 링크 버튼 */
         .open-chat-wrapper { margin-top: 1rem; display: none; }
         .open-chat-btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 1rem; background-color: #FEE500; color: #191919; font-weight: 600; font-size: 1rem; border: none; cursor: pointer; transition: opacity 0.3s; }
         .open-chat-btn:hover { opacity: 0.9; }
@@ -219,14 +218,15 @@
         .admin-panel-input { width: 100%; padding: 8px; margin-bottom: 12px; border: 1px solid #ccc; font-size: 0.85rem; }
         .admin-panel-btns { display: flex; gap: 10px; margin-top: 1rem; }
         .btn-save { background-color: #2ec4b6; color: white; padding: 10px; border: none; border-radius: 4px; cursor: pointer; flex: 1; font-weight: bold; text-align: center; }
-        .btn-add-p { background-color: #E8651E !important; color: white; padding: 8px; border: none; border-radius: 4px; cursor: pointer; width: 100%; margin-top: 5px; font-size: 0.85rem; }
+        .btn-download { background-color: #E8651E; color: white; padding: 10px; border: none; border-radius: 4px; cursor: pointer; width: 100%; margin-top: 8px; font-weight: bold; text-align: center; }
+        .btn-add-p { background-color: #333; color: white; padding: 8px; border: none; border-radius: 4px; cursor: pointer; width: 100%; margin-top: 5px; font-size: 0.85rem; }
         .btn-danger { background-color: #d9534f; color: white; padding: 6px 10px; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; margin-top: 10px; width: 100%; text-align: center; }
         
         /* 모달창 */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 10000; justify-content: center; align-items: center; backdrop-filter: blur(4px); }
         .modal-content { background: white; padding: 2.5rem; border-radius: 6px; width: 85%; max-width: 900px; max-height: 80vh; overflow-y: auto; text-align: left; }
         table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-        th, td { padding: 12px; border: 1px solid #eee; text-align: left; font-size: 0.9rem; vertical-fit: middle; }
+        th, td { padding: 12px; border: 1px solid #eee; text-align: left; font-size: 0.9rem; }
         th { background-color: #E8651E; color: white; font-weight: 500; }
         .btn-table-del { background-color: #d9534f; color: white; padding: 4px 8px; border: none; border-radius: 4px; cursor: pointer; }
         .attached-img-preview { max-width: 80px; max-height: 80px; object-fit: cover; cursor: pointer; border: 1px solid #ddd; }
@@ -346,6 +346,7 @@
             <button class="btn-save" onclick="saveAllChanges()">💾 변경사항 최종 저장</button>
             <button class="btn-save" style="background-color:#d9534f;" onclick="toggleAdminMode()">종료</button>
         </div>
+        <button class="btn-download" onclick="downloadUpdatedHtml()">📥 서버 반영용 파일 다운로드</button>
     </div>
 
     <div class="slider-lightbox" id="sliderLightbox">
@@ -388,7 +389,7 @@
         let isEditMode = false;
         let currentSliderImages = [];
         let currentSliderIndex = 0;
-        let tempClientFileBase64 = ""; // 임시 고객 파일 컨테이너
+        let tempClientFileBase64 = "";
 
         const defaultTexts = {
             "hero-title": "공간에 가치를 더하다", "hero-desc": "YES DESIGN & CONSTRUCTION이 제안하는 프리미엄 인테리어 디자인",
@@ -403,25 +404,29 @@
         };
 
         window.onload = function() {
-            // 페이지 초기화 로딩 및 텍스트 데이터 매핑 복구
+            // HTML 코드 자체에 원본 데이터가 삽입되어 있으면 로컬스토리지보다 HTML 자체를 우선 신뢰합니다.
+            // 이를 통해 다운로드된 파일 기반으로 동기화가 유지되도록 유도합니다.
             const savedTexts = JSON.parse(localStorage.getItem('siteTexts')) || defaultTexts;
-            Object.keys(savedTexts).forEach(id => {
+            Object.keys(defaultTexts).forEach(id => {
                 const el = document.getElementById(id);
                 if(el) {
-                    if(el.tagName === "TEXTAREA" || el.tagName === "INPUT") el.value = savedTexts[id];
-                    else el.innerText = savedTexts[id];
+                    // 만약 HTML 소스 안에 이미 다른 고유 텍스트가 박혀있다면 로컬스토리지 덮어쓰기를 스킵하여 다운로드 본을 존중합니다.
+                    if(el.innerText === defaultTexts[id] && savedTexts[id]) {
+                        if(el.tagName === "TEXTAREA" || el.tagName === "INPUT") el.value = savedTexts[id];
+                        else el.innerText = savedTexts[id];
+                    }
                 }
             });
 
-            // 오픈채팅 주소 불러오기 및 레이아웃 활성화 제어
             const savedChatUrl = localStorage.getItem('kakaoChatUrl') || "";
-            document.getElementById('kakaoUrlInput').value = savedChatUrl;
             if(savedChatUrl) {
+                document.getElementById('kakaoUrlInput').value = savedChatUrl;
                 document.getElementById('openChatArea').style.display = "block";
             }
 
-            // 포트폴리오 노드 생성 복구
+            // 포트폴리오 노드 매핑 복구
             if (!localStorage.getItem('portfolios')) {
+                // 만약 아래 스크립트 단에 고정 데이터가 하드코딩 되어 들어오면 이를 동적으로 읽습니다.
                 localStorage.setItem('portfolios', JSON.stringify([
                     { id: 1, title: '역삼동 아파트 리모델링', desc: '모던 레이아웃 34평 인테리어 디자인 설계', images: [] },
                     { id: 2, title: '성수동 감성 미니멀 카페', desc: '빈티지 앤 내추럴 컨셉 스페이스 브랜딩 프로젝트', images: [] }
@@ -430,23 +435,19 @@
             renderPortfolio();
         };
 
-        // SPA 단일페이지 이동 기능 함수 구현
         function navigateTo(pageId) {
-            // 섹션 활성화 스위칭
             document.querySelectorAll('.page-section').forEach(sec => {
                 sec.classList.remove('active-page');
             });
             const targetSection = document.getElementById('section-' + pageId);
             if(targetSection) targetSection.classList.add('active-page');
 
-            // 내비게이션 바 메뉴 스타일 변경 활성화
             document.querySelectorAll('nav .menu-item').forEach(item => {
                 item.classList.remove('active');
             });
             const activeNav = document.getElementById('nav-' + pageId);
             if(activeNav) activeNav.classList.add('active');
 
-            // 페이지 이동 시 상단 정렬 복귀 스크롤
             window.scrollTo(0, 0);
         }
 
@@ -478,7 +479,7 @@
                         el.contentEditable = "true";
                     }
                 });
-                alert("🔓 편집 모드가 활성화되었습니다. 글자를 클릭해 수정하고 사진을 직접 등록해 보세요.");
+                alert("🔓 편집 모드가 활성화되었습니다. 내용을 수정한 후 파일 다운로드 버튼을 눌러 공유해 보세요!");
             } else {
                 body.classList.remove('edit-mode');
                 panel.style.display = 'none';
@@ -492,7 +493,6 @@
             renderPortfolio();
         }
 
-        // [핵심 변경] 포트폴리오 이미지 멀티 업로드 및 전용 뷰어 가로 슬라이더 탑재 렌더링
         function renderPortfolio() {
             const portfolios = JSON.parse(localStorage.getItem('portfolios')) || [];
             const container = document.getElementById('portfolio-list');
@@ -510,7 +510,6 @@
                     </label>
                 ` : '';
                 
-                // 이미지 배열 체킹 및 썸네일 노출 정의
                 let imgHtml = `<div class="portfolio-img-empty">YES DESIGN ARCHIVE</div>`;
                 let badgeHtml = '';
                 if(item.images && item.images.length > 0) {
@@ -534,7 +533,6 @@
             });
         }
 
-        // 포트폴리오 사진 멀티 업로드 핸들러 처리 함수 (최대 10장 스펙 제어)
         function uploadPortfolioImages(event, id) {
             const files = event.target.files;
             if(!files || files.length === 0) return;
@@ -548,7 +546,7 @@
             let targetItem = portfolios.find(p => p.id === id);
             if(!targetItem) return;
 
-            targetItem.images = []; // 초기화 후 대입 처리
+            targetItem.images = [];
             let loadedCount = 0;
 
             for(let i=0; i<files.length; i++) {
@@ -558,7 +556,7 @@
                     loadedCount++;
                     if(loadedCount === files.length) {
                         localStorage.setItem('portfolios', JSON.stringify(portfolios));
-                        alert(`📸 ${files.length}장의 사진이 정상 등록되었습니다. 빌더 [최종 저장]을 꼭 눌러주세요.`);
+                        alert(`📸 사진 정보 등록 성공! 꼭 빌더 창에서 변경사항 저장을 먼저 눌러주세요.`);
                         renderPortfolio();
                     }
                 };
@@ -566,9 +564,8 @@
             }
         }
 
-        // 가로 슬라이더 라이트박스 뷰어 오픈 핸들러
         function openSlider(id) {
-            if(isEditMode) return; // 편집모드일 때는 사진 등록 목적이므로 실행 차단
+            if(isEditMode) return;
             const portfolios = JSON.parse(localStorage.getItem('portfolios')) || [];
             const targetItem = portfolios.find(p => p.id === id);
             if(!targetItem || !targetItem.images || targetItem.images.length === 0) {
@@ -620,7 +617,6 @@
             }
         }
 
-        // 고객 문의 창 전용 도면 파일 첨부 base64 파싱 엔진
         function handleClientFile(event) {
             const file = event.target.files[0];
             if(!file) return;
@@ -657,7 +653,6 @@
             });
             localStorage.setItem('portfolios', JSON.stringify(portfolios));
 
-            // 카카오 오픈채팅 주소 반영 보관 처리
             const chatUrlVal = document.getElementById('kakaoUrlInput').value.trim();
             localStorage.setItem('kakaoChatUrl', chatUrlVal);
             if(chatUrlVal) {
@@ -666,8 +661,50 @@
                 document.getElementById('openChatArea').style.display = "none";
             }
 
-            alert('💾 변경 완료! 요청하신 구조 데이터셋이 영구 저장되었습니다.');
-            if(isEditMode) toggleAdminMode();
+            alert('💾 변경 내용이 임시 저장되었습니다.\n\n다른 사람들에게도 이 내용을 보이게 하려면 반드시 아래 [서버 반영용 파일 다운로드] 버튼을 눌러 새 파일로 GitHub을 업데이트해 주세요!');
+        }
+
+        // [핵심 변경] 수정한 텍스트와 포트폴리오 데이터를 HTML 내부에 통째로 주입하여 새 파일로 추출해 주는 엔진 함수
+        function downloadUpdatedHtml() {
+            // 현재 화면상의 수정 데이터 수집
+            const textData = {};
+            Object.keys(defaultTexts).forEach(id => {
+                const el = document.getElementById(id);
+                if(el) textData[id] = el.innerText.replace(/\n/g, '\\n');
+            });
+            const portfolios = localStorage.getItem('portfolios') || "[]";
+            const chatUrl = document.getElementById('kakaoUrlInput').value.trim();
+
+            // 현재 HTML 문서 본문 가져오기
+            let currentHtml = document.documentElement.outerHTML;
+
+            // 소스코드 내 초기 복구 템플릿 영역을 최신 데이터로 자동 정밀 갱신
+            const textRegex = /const defaultTexts = \{[\s\S]*?\};/;
+            let newTextString = `const defaultTexts = {\n`;
+            Object.keys(textData).forEach((key, idx, arr) => {
+                newTextString += `            "${key}": "${textData[key]}"${idx === arr.length - 1 ? '' : ','}\n`;
+            });
+            newTextString += `        };`;
+            currentHtml = currentHtml.replace(textRegex, newTextString);
+
+            // 포트폴리오 데이터 템플릿 갱신
+            const portRegex = /localStorage\.setItem\('portfolios', JSON\.stringify\(\[[\s\S]*?\]\)\);/;
+            const newPortString = `localStorage.setItem('portfolios', JSON.stringify(${portfolios}));`;
+            currentHtml = currentHtml.replace(portRegex, newPortString);
+
+            // 카카오톡 링크 템플릿 갱신
+            const chatRegex = /const savedChatUrl = localStorage\.getItem\('kakaoChatUrl'\) \|\| ".*?";/;
+            const newChatString = `const savedChatUrl = localStorage.getItem('kakaoChatUrl') || "${chatUrl}";`;
+            currentHtml = currentHtml.replace(chatRegex, newChatString);
+
+            // 텍스트 파일(Blob) 형태로 포맷 변환하여 다운로드 트리거
+            const blob = new Blob(["<!DOCTYPE html>\n" + currentHtml], { type: "text/html;charset=utf-8" });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "index.html";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
 
         function submitInquiry(e) {
@@ -679,16 +716,15 @@
                 name: document.getElementById('clientName').value,
                 phone: document.getElementById('clientPhone').value,
                 message: document.getElementById('clientMessage').value,
-                attachedImg: tempClientFileBase64 // 도면사진 스트링 대입 처리
+                attachedImg: tempClientFileBase64
             });
             localStorage.setItem('inquiries', JSON.stringify(inquiries));
             
-            // 폼 리셋 및 변수 클리어 처리
             document.getElementById('inquiryForm').reset();
             document.getElementById('clientFilePreview').innerText = "";
             tempClientFileBase64 = "";
             
-            alert('상담 신청이 완료되었습니다! 확인 후 신속하게 연락드리겠습니다.');
+            alert('상담 신청이 완료되었습니다!');
         }
 
         function openInquiryModal() {
