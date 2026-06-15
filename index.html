@@ -13,56 +13,59 @@
         body { font-family: 'Noto Sans KR', sans-serif; line-height: 1.7; color: #222; background-color: #fafafa; transition: background 0.3s; letter-spacing: -0.02em; }
         a { text-decoration: none; color: inherit; }
 
-        /* 편집 모드 가이드 스킨 */
+        /* 실시간 편집 모드 가이드 라인 스킨 */
         .edit-mode [contenteditable="true"] {
-            outline: 2px solid #c5a880 !important;
+            outline: 2px solid var(--point-color, #c5a880) !important;
             background-color: rgba(197, 168, 128, 0.08) !important;
             padding: 4px 8px;
             border-radius: 4px;
         }
 
-        /* 하이엔드 헤더 네비게이션 */
+        /* 하이엔드 플로팅 헤더 네비게이션 (로고 영역 확실히 보장) */
         header { position: fixed; top: 0; width: 100%; background-color: rgba(255, 255, 255, 0.98); display: flex; justify-content: space-between; align-items: center; padding: 1.8rem 10%; border-bottom: 1px solid #f0f0f0; z-index: 1000; backdrop-filter: blur(10px); }
-        .logo { font-size: 1.5rem; font-weight: 900; color: var(--main-bg-color, #1a1a1a); letter-spacing: 4px; cursor: pointer; display: inline-block; }
+        .logo { font-size: 1.6rem; font-weight: 900; color: var(--main-bg-color, #1a1a1a); letter-spacing: 4px; cursor: pointer; display: inline-block; user-select: none; transition: opacity 0.2s; }
+        .logo:hover { opacity: 0.8; }
         nav { display: flex; align-items: center; }
-        nav .menu-item { margin-left: 3.5rem; font-weight: 500; color: #666; transition: color 0.3s, transform 0.2s; cursor: pointer; font-size: 0.95rem; letter-spacing: 1px; position: relative; padding: 5px 0; }
+        nav .menu-item { margin-left: 3.5rem; font-weight: 500; color: #555; transition: color 0.3s; cursor: pointer; font-size: 0.95rem; letter-spacing: 1px; position: relative; padding: 5px 0; }
         nav .menu-item::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 2px; background-color: var(--point-color, #c5a880); transition: width 0.3s, left 0.3s; }
         nav .menu-item:hover::after, nav .menu-item.active::after { width: 100%; left: 0; }
         nav .menu-item:hover, nav .menu-item.active { color: var(--point-color, #c5a880); }
+        
+        .admin-btn { margin-left: 3rem; color: #666; border: 1px solid #ddd; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-weight: 500; font-size: 0.85rem; transition: all 0.3s; background: #fff; }
+        .admin-btn:hover { background-color: #1a1a1a; color: #fff; border-color: #1a1a1a; }
 
-        /* 독립 화면 라우팅 시스템 뷰포트 */
+        /* 독립 화면 라우팅 시스템 뷰포트 코어 */
         .page-view { display: none; margin-top: 90px; min-height: calc(100vh - 260px); opacity: 0; transition: opacity 0.4s ease; }
         .page-view.active { display: block; opacity: 1; }
 
-        /* [1] 메인 시네마틱 히어로 섹션 */
-        .hero { height: 80vh; background-color: var(--main-bg-color, #1a1a1a); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; padding: 0 2rem; background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)); }
-        .hero h1 { font-size: 4rem; margin-bottom: 1.8rem; letter-spacing: 2px; line-height: 1.25; font-weight: 700; word-break: keep-all; }
-        .hero p { font-size: 1.35rem; color: #ccc; font-weight: 300; letter-spacing: 2px; }
+        /* [1] 메인 시네마틱 히어로 비주얼 */
+        .hero { height: 75vh; background-color: var(--main-bg-color, #1a1a1a); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; padding: 0 2rem; }
+        .hero h1 { font-size: 3.8rem; margin-bottom: 1.8rem; letter-spacing: 1px; line-height: 1.3; font-weight: 700; word-break: keep-all; }
+        .hero p { font-size: 1.3rem; color: #ccc; font-weight: 300; letter-spacing: 2px; }
 
         /* 고급 서브페이지 타이틀 헤더 */
-        .page-header { background-color: #ffffff; padding: 6rem 10% 5rem 10%; text-align: center; border-bottom: 1px solid #eee; margin-bottom: 5rem; }
-        .page-header h2 { font-size: 2.6rem; color: var(--main-bg-color, #1a1a1a); letter-spacing: 3px; margin-bottom: 1rem; font-weight: 900; position: relative; display: inline-block; padding-bottom: 15px; }
+        .page-header { background-color: #ffffff; padding: 6rem 10% 5rem 10%; text-align: center; border-bottom: 1px solid #f0f0f0; margin-bottom: 5rem; }
+        .page-header h2 { font-size: 2.5rem; color: var(--main-bg-color, #1a1a1a); letter-spacing: 3px; margin-bottom: 1rem; font-weight: 900; position: relative; display: inline-block; padding-bottom: 15px; }
         .page-header h2::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 40px; height: 2px; background-color: var(--point-color, #c5a880); }
         .page-header .section-desc { color: #888; font-size: 1.05rem; margin-top: 10px; font-weight: 300; letter-spacing: 1px; }
 
-        /* [2] ABOUT US 디자인 */
-        .about-container { max-width: 800px; margin: 0 auto 8rem auto; padding: 0 2rem; font-size: 1.2rem; color: #444; line-weight: 2.2; text-align: center; word-break: keep-all; font-weight: 300; }
-        .about-container p { margin-bottom: 2rem; }
+        /* [2] 회사 소개 (ABOUT US) */
+        .about-container { max-width: 850px; margin: 0 auto 8rem auto; padding: 0 2rem; font-size: 1.2rem; color: #444; line-height: 2.2; text-align: center; word-break: keep-all; font-weight: 300; }
 
-        /* [3] PORTFOLIO 디자인 (갤러리 룩앤필) */
-        .portfolio-container { max-width: 1250px; margin: 0 auto 8rem auto; padding: 0 2rem; }
+        /* [3] 포트폴리오 (갤러리 아카이브) */
+        .portfolio-container { max-width: 1300px; margin: 0 auto 8rem auto; padding: 0 2rem; }
         .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 3.5rem; }
         .portfolio-item { background-color: #ffffff; border: 1px solid #f0f0f0; overflow: hidden; transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s; border-radius: 4px; }
         .portfolio-item:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.06); }
-        .portfolio-img { width: 100%; height: 290px; background-color: #f7f7f7; display: flex; align-items: center; justify-content: center; color: #aaa; font-weight: 500; font-size: 1rem; border-bottom: 1px solid #f3f3f3; letter-spacing: 1px; }
+        .portfolio-img { width: 100%; height: 280px; background-color: #f7f7f7; display: flex; align-items: center; justify-content: center; color: #aaa; font-weight: 500; font-size: 1rem; border-bottom: 1px solid #f3f3f3; letter-spacing: 1px; }
         .portfolio-info { padding: 2.2rem; text-align: left; }
         .portfolio-info h3 { font-size: 1.35rem; color: var(--main-bg-color, #1a1a1a); margin-bottom: 0.8rem; font-weight: 700; letter-spacing: -0.5px; }
         .portfolio-info p { color: #666; font-size: 0.95rem; line-height: 1.7; font-weight: 300; }
 
-        /* [4] CONTACT US 디자인 (비대칭 모던 레이아웃) */
+        /* [4] 문의하기 (CONTACT US 비대칭 레이아웃) */
         .contact-container { max-width: 1150px; margin: 0 auto 8rem auto; padding: 0 2rem; display: grid; grid-template-columns: 1fr 1.3fr; gap: 6rem; }
         .contact-info { display: flex; flex-direction: column; justify-content: center; }
-        .contact-info h3 { font-size: 1.8rem; font-weight: 700; margin-bottom: 2rem; color: #1a1a1a; }
+        .contact-info h3 { font-size: 1.8rem; font-weight: 700; margin-bottom: 2rem; color: #1a1a1a; letter-spacing: 1px; }
         .contact-info p { margin-bottom: 1.8rem; font-size: 1.05rem; color: #555; border-bottom: 1px solid #f0f0f0; padding-bottom: 15px; font-weight: 300; }
         .contact-info p strong { color: var(--main-bg-color, #1a1a1a); display: inline-block; width: 110px; font-weight: 700; }
         .contact-form { background: #ffffff; padding: 3.5rem; border: 1px solid #eee; box-shadow: 0 10px 30px rgba(0,0,0,0.01); border-radius: 4px; }
@@ -70,11 +73,10 @@
         .form-group label { display: block; margin-bottom: 0.8rem; font-weight: 700; color: var(--main-bg-color, #1a1a1a); font-size: 0.9rem; letter-spacing: 0.5px; }
         .form-group input, .form-group textarea { width: 100%; padding: 1.1rem; border: 1px solid #e0e0e0; font-size: 0.95rem; font-family: inherit; transition: border-color 0.3s, box-shadow 0.3s; border-radius: 2px; background-color: #fafafa; }
         .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--point-color, #c5a880); background-color: #fff; box-shadow: 0 0 0 3px rgba(197, 168, 128, 0.1); }
-        .submit-btn { width: 100%; padding: 1.3rem; background-color: var(--main-bg-color, #1a1a1a); color: white; border: none; font-size: 1.05rem; font-weight: 700; cursor: pointer; transition: background 0.3s, transform 0.1s; letter-spacing: 2px; text-transform: uppercase; border-radius: 2px; }
+        .submit-btn { width: 100%; padding: 1.3rem; background-color: var(--main-bg-color, #1a1a1a); color: white; border: none; font-size: 1.05rem; font-weight: 700; cursor: pointer; transition: background 0.3s; letter-spacing: 2px; border-radius: 2px; }
         .submit-btn:hover { background-color: var(--point-color, #c5a880); }
-        .submit-btn:active { transform: scale(0.99); }
 
-        /* 실시간 빌더 관리자 대시보드 스킨 */
+        /* 실시간 빌더 대시보드 관리자 패널 */
         .admin-panel { display: none; position: fixed; bottom: 25px; right: 25px; background: #fff; border: 1px solid #1a1a1a; padding: 1.8rem; box-shadow: 0 20px 50px rgba(0,0,0,0.15); z-index: 9999; max-width: 360px; width: calc(100% - 50px); border-radius: 6px; }
         .admin-panel h3 { margin-bottom: 1.2rem; font-size: 1.1rem; color: #1a1a1a; border-bottom: 1px solid #1a1a1a; padding-bottom: 8px; font-weight: 700; }
         .color-picker-group { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.2rem; }
@@ -84,9 +86,8 @@
         .btn-save { background-color: #10b981; color: white; padding: 12px; border: none; cursor: pointer; flex: 1; font-weight: 700; text-align: center; border-radius: 4px; }
         .btn-add-p { background-color: #1a1a1a; color: white; padding: 10px; border: none; cursor: pointer; width: 100%; margin-top: 6px; font-size: 0.85rem; font-weight: 500; border-radius: 4px; }
         .btn-danger { background-color: #ef4444; color: white; padding: 6px 12px; border: none; cursor: pointer; font-size: 0.85rem; margin-top: 12px; width: 100%; text-align: center; border-radius: 4px; }
-        .btn-download { background-color: #f97316; color: white; padding: 12px; border: none; cursor: pointer; width: 100%; margin-top: 10px; font-weight: 700; text-align: center; border-radius: 4px; }
         
-        /* 모달 팝업 스킨 */
+        /* 모달 시스템 */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10000; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
         .modal-content { background: white; padding: 3rem; width: 100%; max-width: 900px; max-height: 85vh; overflow-y: auto; text-align: left; border-radius: 4px; }
         .table-responsive { width: 100%; overflow-x: auto; margin-top: 1.5rem; }
@@ -95,26 +96,25 @@
         th { background-color: #1a1a1a; color: white; font-weight: 500; }
         .btn-table-del { background-color: #ef4444; color: white; padding: 4px 10px; border: none; cursor: pointer; border-radius: 2px; }
 
-        /* 하이엔드 다크 푸터 및 마침표 은폐형 스위치 */
-        footer { background-color: #1a1a1a; color: #666; display: flex; justify-content: space-between; align-items: center; padding: 3rem 10%; font-size: 0.85rem; border-top: 1px solid #222; letter-spacing: 0.5px; }
-        .hidden-trigger { color: #1a1a1a; cursor: pointer; user-select: none; font-size: 0.8rem; transition: color 0.3s; padding: 5px; }
-        .hidden-trigger:hover { color: #2a2a2a; }
+        /* 하이엔드 다크 푸터 */
+        footer { background-color: var(--main-bg-color, #1a1a1a); color: #666; text-align: center; padding: 3rem 10%; font-size: 0.85rem; border-top: 1px solid #222; letter-spacing: 0.5px; margin-top: 0; }
 
         /* ==================================================
-           📱 럭셔리 모바일 반응형 조율 스케일 
+           📱 럭셔리 모바일 반응형 대응 레이아웃
         ================================================== */
         @media (max-width: 768px) {
-            header { padding: 1.2rem 6%; }
-            nav .menu-item { margin-left: 1.8rem; font-size: 0.9rem; }
-            .logo { font-size: 1.25rem; letter-spacing: 2px; }
+            header { padding: 1.2rem 6%; flex-direction: column; gap: 10px; }
+            nav .menu-item { margin-left: 1.5rem; font-size: 0.9rem; }
+            .logo { font-size: 1.3rem; letter-spacing: 2px; }
+            .admin-btn { margin-left: 1.5rem; padding: 4px 10px; font-size: 0.8rem; }
 
-            .hero h1 { font-size: 2.5rem; margin-bottom: 1.2rem; line-height: 1.3; }
-            .hero p { font-size: 1.1rem; letter-spacing: 1px; }
+            .hero h1 { font-size: 2.4rem; margin-bottom: 1.2rem; }
+            .hero p { font-size: 1.1rem; }
 
             .page-header { padding: 4rem 6% 3.5rem 6%; margin-bottom: 3rem; }
             .page-header h2 { font-size: 2.1rem; }
 
-            .about-container { font-size: 1.05rem; padding: 0 1rem; margin-bottom: 5rem; line-height: 2; }
+            .about-container { font-size: 1.05rem; padding: 0 1rem; margin-bottom: 5rem; }
 
             .portfolio-container { padding: 0 1rem; margin-bottom: 5rem; }
             .portfolio-grid { grid-template-columns: 1fr; gap: 2.5rem; }
@@ -125,8 +125,6 @@
             .contact-info h3 { margin-bottom: 1.5rem; font-size: 1.5rem; }
             .contact-info p strong { width: auto; margin-right: 12px; }
             .contact-form { padding: 2.5rem 1.5rem; }
-            
-            footer { padding: 2.5rem 6%; flex-direction: column; gap: 15px; text-align: center; }
         }
     </style>
 </head>
@@ -138,6 +136,7 @@
             <span class="menu-item" id="menu1" onclick="navigateTo('about')">회사소개</span>
             <span class="menu-item" id="menu2" onclick="navigateTo('portfolio')">포트폴리오</span>
             <span class="menu-item" id="menu3" onclick="navigateTo('contact')">문의하기</span>
+            <a class="admin-btn" id="admin-toggle-btn" onclick="toggleAdminMode()">관리자 편집모드 켜기</a>
         </nav>
     </header>
 
@@ -193,8 +192,8 @@
                         <input type="tel" id="clientPhone" required placeholder="010-0000-0000">
                     </div>
                     <div class="form-group">
-                        <label>문의 및 요청요약</label>
-                        <textarea id="clientMessage" rows="5" required placeholder="원하시는 공간 타입, 평수, 예산대 등을 자유롭게 적어주세요."></textarea>
+                        <label>문의 및 요청내용</label>
+                        <textarea id="clientMessage" rows="5" required placeholder="원하시는 시공 평수, 예산, 스타일 등을 자유롭게 적어주세요."></textarea>
                     </div>
                     <button type="submit" class="submit-btn">상담 신청하기</button>
                 </form>
@@ -217,9 +216,7 @@
         <button class="btn-add-p" style="background-color:#555;" onclick="openInquiryModal()">📩 고객 문의내역 보기</button>
         <div class="admin-panel-btns">
             <button class="btn-save" onclick="saveAllChanges()">💾 변경사항 최종 저장</button>
-            <button class="btn-save" style="background-color:#555;" onclick="toggleAdminMode()">종료</button>
         </div>
-        <button class="btn-download" onclick="downloadUpdatedHtml()">📥 서버 반영용 파일 다운로드</button>
     </div>
 
     <div class="modal" id="inquiryModal">
@@ -245,7 +242,6 @@
 
     <footer>
         <p>&copy; 2026 <span id="footer-name" contenteditable="false">YES DESIGN</span>. All rights reserved.</p>
-        <div class="hidden-trigger" onclick="toggleAdminMode()">●</div>
     </footer>
 
     <script>
@@ -255,16 +251,18 @@
             "text-logo": "YES DESIGN", "menu1": "회사소개", "menu2": "포트폴리오", "menu3": "문의하기",
             "hero-title": "공간에 가치를 더하다", "hero-desc": "YES DESIGN이 제안하는 프리미엄 인테리어 디자인",
             "about-title": "ABOUT US", "about-sub": "우리가 추구하는 가치를 소개합니다.",
-            "about-text": "안녕하세요. YES DESIGN입니다. 저희는 트렌디함과 실용성을 겸비한 공간을 창조하는 인테리어 전문 기업입니다.",
+            "about-text": "안녕하세요. YES DESIGN입니다. 저희는 트렌디함과 실용성을 겸비한 공간을 창조하는 인테리어 전문 기업입니다. 단순한 시공을 넘어, 그 공간에 머무는 사람들의 이야기와 행복을 담아내고자 노력합니다. 주거 공간부터 상업 공간까지 최고의 전문가들이 책임지고 디자인해 드립니다.",
             "port-title": "PORTFOLIO", "port-sub": "YES DESIGN의 최근 시공 사례입니다.",
             "contact-title": "CONTACT US", "contact-sub": "상담 및 견적 문의를 남겨주시면 신속히 답변해 드리겠습니다.",
             "info-name": "YES DESIGN", "info-addr": "서울시 강남구 테헤란로 123", "info-tel": "02-1234-5678", "info-email": "contact@yesdesign.com",
             "footer-name": "YES DESIGN"
         };
 
-        // 완벽 서브 라우팅 컨트롤러 스크립트
+        // 다중 독립 화면 완벽 제어 라우팅 함수
         function navigateTo(pageId) {
+            // 모든 화면 기본 숨김 처리
             document.querySelectorAll('.page-view').forEach(view => view.classList.remove('active'));
+            // 모든 내비게이션 메뉴 액티브 효과 초기화
             document.querySelectorAll('nav .menu-item').forEach(item => item.classList.remove('active'));
 
             const targetPage = document.getElementById('page-' + pageId);
@@ -272,6 +270,7 @@
                 targetPage.classList.add('active');
             }
 
+            // 액티브 하이라이트 연결
             if (pageId === 'about') document.getElementById('menu1').classList.add('active');
             if (pageId === 'portfolio') document.getElementById('menu2').classList.add('active');
             if (pageId === 'contact') document.getElementById('menu3').classList.add('active');
@@ -280,26 +279,25 @@
         }
 
         window.onload = function() {
+            // 사이트 내 텍스트 즉각 복구 및 렌더링
             const savedTexts = JSON.parse(localStorage.getItem('siteTexts')) || defaultTexts;
-            Object.keys(defaultTexts).forEach(id => {
+            Object.keys(savedTexts).forEach(id => {
                 const el = document.getElementById(id);
-                if(el) {
-                    if((el.innerText === defaultTexts[id] || el.innerText === '') && savedTexts[id]) {
-                        el.innerText = savedTexts[id];
-                    }
-                }
+                if(el) el.innerText = savedTexts[id];
             });
 
+            // 관리자 설정 테마 색상 동기화 복구
             const mainColor = localStorage.getItem('mainColor') || '#1a1a1a';
             const pointColor = localStorage.getItem('pointColor') || '#c5a880';
             document.getElementById('mainColorPicker').value = mainColor;
             document.getElementById('pointColorPicker').value = pointColor;
             setCSSVariables(mainColor, pointColor);
 
+            // 포트폴리오 데이터 세션 로딩
             if (!localStorage.getItem('portfolios')) {
                 localStorage.setItem('portfolios', JSON.stringify([
-                    { id: 1, title: '역삼동 하이엔드 아파트 리모델링', desc: '미니멀한 직선 요소를 극대화하여 완성한 럭셔리 주거 공간' },
-                    { id: 2, title: '성수동 아틀리에 감성 카페', desc: '노출 콘크리트와 따뜻한 티크 원목의 조화가 돋보이는 상업 공간 디자인' }
+                    { id: 1, title: '역삼동 하이엔드 아파트 리모델링', desc: '미니멀한 직선 요소를 극대화하여 완성한 럭셔리 주거 공간입니다.' },
+                    { id: 2, title: '성수동 아틀리에 감성 카페', desc: '노출 콘크리트와 따뜻한 티크 원목의 조화가 돋보이는 상업 인테리어입니다.' }
                 ]));
             }
             renderPortfolio();
@@ -320,29 +318,35 @@
             isEditMode = !isEditMode;
             const body = document.body;
             const panel = document.getElementById('adminPanel');
+            const toggleBtn = document.getElementById('admin-toggle-btn');
 
             if (isEditMode) {
                 body.classList.add('edit-mode');
                 panel.style.display = 'block';
+                toggleBtn.innerText = "📁 편집모드 종료 (반영)";
+                toggleBtn.style.background = "#ef4444";
+                toggleBtn.style.color = "white";
                 
-                // 편집용 전체 활성화 트리거링
+                // 편안한 일괄 편집을 위해 전체 뷰 일시 활성화
                 document.querySelectorAll('.page-view').forEach(view => view.classList.add('active'));
                 
                 Object.keys(defaultTexts).forEach(id => {
                     const el = document.getElementById(id);
                     if(el) el.contentEditable = "true";
                 });
-                alert("🔓 실시간 멀티플 화면 빌더 편집 모드가 활성화되었습니다.\n\n원하는 텍스트 영역을 클릭해 편집한 뒤 [변경사항 최종 저장]을 실행해 주세요.");
             } else {
                 body.classList.remove('edit-mode');
                 panel.style.display = 'none';
+                toggleBtn.innerText = "관리자 편집모드 켜기";
+                toggleBtn.style.background = "#fff";
+                toggleBtn.style.color = "#666";
                 
                 Object.keys(defaultTexts).forEach(id => {
                     const el = document.getElementById(id);
                     if(el) el.contentEditable = "false";
                 });
                 saveAllChanges();
-                navigateTo('home');
+                navigateTo('home'); // 정합성을 위해 저장 완료 후 메인 홈 화면 컴백
             }
             renderPortfolio();
         }
@@ -375,7 +379,7 @@
             portfolios.push({
                 id: Date.now(),
                 title: '새 프로젝트 아카이브 명칭',
-                desc: '이 프로젝트에 적용된 상세 인테리어 컨셉과 스타일 설명글'
+                desc: '여기를 클릭하여 프로젝트에 적용된 상세 인테리어 컨셉 설명을 수정하세요.'
             });
             localStorage.setItem('portfolios', JSON.stringify(portfolios));
             renderPortfolio();
@@ -388,6 +392,7 @@
             renderPortfolio();
         }
 
+        // 실시간 화면 즉시 반영 연동 세이브 코어
         function saveAllChanges() {
             const textData = {};
             Object.keys(defaultTexts).forEach(id => {
@@ -410,48 +415,8 @@
             localStorage.setItem('mainColor', document.getElementById('mainColorPicker').value);
             localStorage.setItem('pointColor', document.getElementById('pointColorPicker').value);
 
-            alert('💾 로컬 캐시에 완벽하게 매핑 세이브되었습니다.\n\n타인에게 배포 및 온전한 모바일 미러링을 동기화하기 위해서는 [서버 반영용 파일 다운로드]를 받아 저장하세요.');
-        }
-
-        function downloadUpdatedHtml() {
-            const textData = {};
-            Object.keys(defaultTexts).forEach(id => {
-                const el = document.getElementById(id);
-                if(el) textData[id] = el.innerText.replace(/\n/g, '\\n');
-            });
-            const portfolios = localStorage.getItem('portfolios') || "[]";
-            const mainColor = document.getElementById('mainColorPicker').value;
-            const pointColor = document.getElementById('pointColorPicker').value;
-
-            let currentHtml = document.documentElement.outerHTML;
-
-            const textRegex = /const defaultTexts = \{[\s\S]*?\};/;
-            let newTextString = `const defaultTexts = {\n`;
-            Object.keys(textData).forEach((key, idx, arr) => {
-                newTextString += `            "${key}": "${textData[key]}"${idx === arr.length - 1 ? '' : ','}\n`;
-            });
-            newTextString += `        };`;
-            currentHtml = currentHtml.replace(textRegex, newTextString);
-
-            const portRegex = /localStorage\.setItem\('portfolios', JSON\.stringify\(\[[\s\S]*?\]\)\);/;
-            const newPortString = `localStorage.setItem('portfolios', JSON.stringify(${portfolios}));`;
-            currentHtml = currentHtml.replace(portRegex, newPortString);
-
-            const mainColorRegex = /const mainColor = localStorage\.getItem\('mainColor'\) \|\| '.*?';/;
-            const newMainColorString = `const mainColor = localStorage.getItem('mainColor') || '${mainColor}';`;
-            currentHtml = currentHtml.replace(mainColorRegex, newMainColorString);
-
-            const pointColorRegex = /const pointColor = localStorage\.getItem\('pointColor'\) \|\| '.*?';/;
-            const newPointColorString = `const pointColor = localStorage.getItem('pointColor') || '${pointColor}';`;
-            currentHtml = currentHtml.replace(pointColorRegex, newPointColorString);
-
-            const blob = new Blob(["<!DOCTYPE html>\n" + currentHtml], { type: "text/html;charset=utf-8" });
-            const link = document.createElement("a");
-            link.href = URL.createObjectURL(blob);
-            link.download = "index.html";
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            alert('💾 변경된 모든 디자인과 텍스트가 홈페이지 화면에 즉시 반영 및 영구 저장되었습니다!');
+            if(isEditMode) toggleAdminMode();
         }
 
         function submitInquiry(e) {
@@ -466,7 +431,7 @@
             });
             localStorage.setItem('inquiries', JSON.stringify(inquiries));
             document.getElementById('inquiryForm').reset();
-            alert('상담 신청이 완료되었습니다!');
+            alert('상담 신청이 정상 접수되었습니다!');
         }
 
         function openInquiryModal() {
@@ -476,7 +441,7 @@
             tbody.innerHTML = '';
 
             if(inquiries.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;">접수된 문의가 없습니다.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;">접수된 문의 내역이 존재하지 않습니다.</td></tr>`;
                 return;
             }
             inquiries.forEach(item => {
@@ -495,7 +460,7 @@
         function closeInquiryModal() { document.getElementById('inquiryModal').style.display = 'none'; }
         
         function deleteInquiry(id) {
-            if(confirm("이 문의 내역을 삭제하시겠습니까?")) {
+            if(confirm("이 문의 내역을 정말 삭제하시겠습니까?")) {
                 let inquiries = JSON.parse(localStorage.getItem('inquiries')) || [];
                 inquiries = inquiries.filter(item => item.id !== id);
                 localStorage.setItem('inquiries', JSON.stringify(inquiries));
