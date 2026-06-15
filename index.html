@@ -18,49 +18,51 @@
             border-radius: 4px;
         }
 
-        /* 네비게이션 바 */
-        header { position: fixed; top: 0; width: 100%; background-color: rgba(255, 255, 255, 0.95); display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 5%; box-shadow: 0 1px 5px rgba(0,0,0,0.1); z-index: 1000; }
-        .logo { font-size: 1.5rem; font-weight: bold; color: var(--main-bg-color, #1a2a3a); letter-spacing: 2px; }
+        /* 네비게이션 바 - 프리미엄 PC 기준 와이드 레이아웃 */
+        header { position: fixed; top: 0; width: 100%; background-color: rgba(255, 255, 255, 0.95); display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 8%; box-shadow: 0 1px 5px rgba(0,0,0,0.05); z-index: 1000; }
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--main-bg-color, #1a2a3a); letter-spacing: 2px; cursor: pointer; }
         nav { display: flex; align-items: center; }
-        nav .menu-item { margin-left: 2rem; font-weight: 600; color: #555; transition: color 0.3s; cursor: pointer; }
+        nav .menu-item { margin-left: 2.5rem; font-weight: 600; color: #555; transition: color 0.3s; cursor: pointer; font-size: 1rem; }
         nav .menu-item:hover { color: var(--point-color, #c5a880); }
-        .admin-btn { margin-left: 2rem; color: #777; border: 1px solid #ccc; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; text-align: center; }
-        .admin-btn:hover { background-color: #f4f4f4; }
 
         /* 메인 히어로 섹션 */
-        .hero { height: 60vh; background-color: var(--main-bg-color, #1a2a3a); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; padding: 0 1rem; margin-top: 70px; }
-        .hero h1 { font-size: 3rem; margin-bottom: 1rem; letter-spacing: 1px; line-height: 1.2; }
-        .hero p { font-size: 1.2rem; color: #ddd; }
+        .hero { height: 60vh; background-color: var(--main-bg-color, #1a2a3a); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; padding: 0 2rem; margin-top: 75px; }
+        .hero h1 { font-size: 3rem; margin-bottom: 1.2rem; letter-spacing: 1px; line-height: 1.3; font-weight: bold; }
+        .hero p { font-size: 1.2rem; color: #ddd; font-weight: 300; }
 
-        /* 공통 섹션 스타일 */
-        section { padding: 5rem 10%; text-align: center; }
-        section h2 { font-size: 2.2rem; color: var(--main-bg-color, #1a2a3a); margin-bottom: 1rem; position: relative; padding-bottom: 10px; }
+        /* 공통 섹션 스타일 - 고급 컴포넌트 여백 구조 */
+        section { padding: 6rem 12%; text-align: center; }
+        section h2 { font-size: 2.2rem; color: var(--main-bg-color, #1a2a3a); margin-bottom: 1rem; position: relative; padding-bottom: 12px; letter-spacing: 1px; }
         section h2::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 50px; height: 2px; background-color: var(--point-color, #c5a880); }
-        .section-desc { color: #777; margin-bottom: 3rem; }
+        .section-desc { color: #777; margin-bottom: 3.5rem; font-size: 1rem; }
 
         /* 회사 소개 */
-        .about-content { max-width: 800px; margin: 0 auto; font-size: 1.1rem; color: #555; line-height: 1.8; text-align: justify; word-break: keep-all; }
+        .about-content { max-width: 850px; margin: 0 auto; font-size: 1.1rem; color: #555; line-height: 1.9; text-align: center; word-break: keep-all; }
 
-        /* 포트폴리오 섹션 */
-        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
-        .portfolio-item { background-color: #f9f9f9; border: 1px solid #eee; overflow: hidden; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        /* 포트폴리오 섹션 - 그리드 모던화 및 부드러운 애니메이션 */
+        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; max-width: 1200px; margin: 0 auto; }
+        .portfolio-item { background-color: #f9f9f9; border: 1px solid #eee; overflow: hidden; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); transition: transform 0.3s; }
+        .portfolio-item:hover { transform: translateY(-5px); }
         .portfolio-img { width: 100%; height: 250px; background-color: #eaeaea; display: flex; align-items: center; justify-content: center; color: #888; font-weight: bold; font-size: 1.1rem; }
         .portfolio-info { padding: 1.5rem; text-align: left; }
-        .portfolio-info h3 { font-size: 1.2rem; color: var(--main-bg-color, #1a2a3a); margin-bottom: 0.5rem; }
-        .portfolio-info p { color: #777; font-size: 0.9rem; }
+        .portfolio-info h3 { font-size: 1.2rem; color: var(--main-bg-color, #1a2a3a); margin-bottom: 0.6rem; font-weight: bold; }
+        .portfolio-info p { color: #777; font-size: 0.95rem; line-height: 1.5; }
 
         /* 문의하기 폼 */
         .contact { background-color: #f4f6f8; }
-        .contact-container { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; max-width: 1000px; margin: 0 auto; text-align: left; }
-        .contact-info p { margin-bottom: 1rem; font-size: 1.1rem; }
-        .contact-form { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .form-group { margin-bottom: 1.2rem; }
-        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: bold; color: var(--main-bg-color, #1a2a3a); }
-        .form-group input, .form-group textarea { width: 100%; padding: 0.8rem; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; }
-        .submit-btn { width: 100%; padding: 1rem; background-color: var(--main-bg-color, #1a2a3a); color: white; border: none; border-radius: 4px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: background 0.3s; }
+        .contact-container { display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; max-width: 1100px; margin: 0 auto; text-align: left; }
+        .contact-info { display: flex; flex-direction: column; justify-content: center; }
+        .contact-info p { margin-bottom: 1.2rem; font-size: 1.1rem; color: #444; }
+        .contact-info p strong { color: var(--main-bg-color, #1a2a3a); display: inline-block; width: 90px; }
+        .contact-form { background: white; padding: 2.5rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); border: 1px solid #eee; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.6rem; font-weight: bold; color: var(--main-bg-color, #1a2a3a); font-size: 0.95rem; }
+        .form-group input, .form-group textarea { width: 100%; padding: 0.85rem; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; font-family: inherit; }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--point-color, #c5a880); }
+        .submit-btn { width: 100%; padding: 1.1rem; background-color: var(--main-bg-color, #1a2a3a); color: white; border: none; border-radius: 4px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: background 0.3s; }
         .submit-btn:hover { background-color: var(--point-color, #c5a880); }
 
-        /* 관리자 패널 */
+        /* 관리자 패널 사양 업데이트 */
         .admin-panel { display: none; position: fixed; bottom: 20px; right: 20px; background: #fff; border: 3px solid var(--point-color, #c5a880); padding: 1.5rem; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 9999; max-width: 350px; width: calc(100% - 40px); }
         .admin-panel h3 { margin-bottom: 1rem; font-size: 1.1rem; color: #1a2a3a; border-bottom: 2px solid #333; padding-bottom: 5px; }
         .color-picker-group { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
@@ -72,7 +74,7 @@
         .btn-danger { background-color: #d9534f; color: white; padding: 5px 10px; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; margin-top: 10px; width: 100%; text-align: center; }
         .btn-download { background-color: #E8651E; color: white; padding: 10px; border: none; border-radius: 6px; cursor: pointer; width: 100%; margin-top: 8px; font-weight: bold; text-align: center; }
         
-        /* 모달창 반응형 스크롤 레이아웃 보완 */
+        /* 모달창 반응형 뷰포트 레이어 */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10000; justify-content: center; align-items: center; padding: 10px; }
         .modal-content { background: white; padding: 2rem; border-radius: 8px; width: 100%; max-width: 800px; max-height: 85vh; overflow-y: auto; text-align: left; }
         .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 1rem; }
@@ -81,52 +83,50 @@
         th { background-color: #1a2a3a; color: white; }
         .btn-table-del { background-color: #d9534f; color: white; padding: 3px 8px; border: none; border-radius: 4px; cursor: pointer; }
 
-        /* 푸터 */
-        footer { background-color: var(--main-bg-color, #1a2a3a); color: #888; text-align: center; padding: 2rem; font-size: 0.9rem; margin-top: 3rem; }
+        /* 푸터 사양 디자인 및 비밀 편집용 점 기호 게이트웨이 */
+        footer { background-color: var(--main-bg-color, #1a2a3a); color: #888; display: flex; justify-content: space-between; align-items: center; padding: 2rem 8%; font-size: 0.9rem; margin-top: 3rem; }
+        .hidden-trigger { color: var(--main-bg-color, #1a2a3a); cursor: pointer; user-select: none; font-size: 0.8rem; transition: color 0.3s; }
+        .hidden-trigger:hover { color: #445566; }
 
-        /* ==========================================
-           📱 모바일 및 태블릿 반응형 미디어 쿼리 세팅 
-        ========================================== */
+        /* ==================================================
+           📱 스마트폰 및 모바일 반응형: PC 느낌 그대로 스케일 다운 
+        ================================================== */
         @media (max-width: 768px) {
-            /* 헤더 메뉴 배치 변경 */
-            header { padding: 1rem; flex-direction: column; gap: 0.8rem; position: relative; }
-            nav { width: 100%; justify-content: center; flex-wrap: wrap; gap: 10px 0; }
-            nav .menu-item { margin-left: 1rem; margin-right: 1rem; font-size: 0.95rem; }
-            .admin-btn { margin-left: 0.5rem; padding: 4px 8px; font-size: 0.85rem; }
+            header { padding: 1.2rem 5%; }
+            nav .menu-item { margin-left: 1.5rem; font-size: 0.95rem; }
 
-            /* 메인 히어로 텍스트 축소 */
-            .hero { margin-top: 0; height: 50vh; padding: 0 1.5rem; }
-            .hero h1 { font-size: 1.9rem; }
-            .hero p { font-size: 1rem; }
+            /* 영문/국문 텍스트 깨짐 및 가독성을 세밀하게 잡는 정밀 축소 비율 */
+            .hero { height: 55vh; padding: 0 1.5rem; }
+            .hero h1 { font-size: 2.2rem; margin-bottom: 1rem; }
+            .hero p { font-size: 1.05rem; }
 
-            /* 공통 섹션 패딩 축소 */
-            section { padding: 3.5rem 5%; }
-            section h2 { font-size: 1.7rem; }
-            .section-desc { margin-bottom: 2rem; font-size: 0.9rem; }
-            .about-content { font-size: 0.95rem; line-height: 1.7; }
+            section { padding: 4.5rem 6%; }
+            section h2 { font-size: 1.9rem; }
+            .section-desc { margin-bottom: 2.5rem; font-size: 0.95rem; }
+            .about-content { font-size: 1rem; line-height: 1.8; }
 
-            /* 포트폴리오 그리드 1열 자동 확장 */
-            .portfolio-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-            .portfolio-img { height: 200px; }
+            /* 가로 와이드 그리드는 모바일 폭에 최적화하여 촘촘히 렌더링 */
+            .portfolio-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+            .portfolio-img { height: 220px; }
 
-            /* 문의하기 영역 1단(세로배열)으로 자동 전환 */
-            .contact-container { grid-template-columns: 1fr; gap: 2rem; }
-            .contact-info p { font-size: 0.95rem; }
-            .contact-form { padding: 1.5rem; }
+            /* 견적폼만 가독성 및 터치 편의를 위해 블록 세로 배치 구조로 유연화 */
+            .contact-container { grid-template-columns: 1fr; gap: 2.5rem; }
+            .contact-info { text-align: center; }
+            .contact-info p strong { width: auto; margin-right: 10px; }
+            .contact-form { padding: 1.8rem; }
             
-            .modal-content { padding: 1.5rem; }
+            footer { padding: 2rem 5%; flex-direction: column; gap: 10px; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo" id="text-logo" contenteditable="false">YES DESIGN</div>
+        <div class="logo" id="text-logo" contenteditable="false" onclick="location.href='#'">YES DESIGN</div>
         <nav>
             <span class="menu-item" id="menu1" onclick="location.href='#about'" contenteditable="false">회사소개</span>
             <span class="menu-item" id="menu2" onclick="location.href='#portfolio'" contenteditable="false">포트폴리오</span>
             <span class="menu-item" id="menu3" onclick="location.href='#contact'" contenteditable="false">문의하기</span>
-            <a class="admin-btn" id="admin-toggle-btn" onclick="toggleAdminMode()">관리자 편집모드 켜기</a>
         </nav>
     </header>
 
@@ -195,6 +195,7 @@
         <button class="btn-add-p" style="background-color:#555;" onclick="openInquiryModal()">📩 고객 문의내역 보기</button>
         <div class="admin-panel-btns">
             <button class="btn-save" onclick="saveAllChanges()">💾 변경사항 최종 저장</button>
+            <button class="btn-save" style="background-color:#555;" onclick="toggleAdminMode()">종료</button>
         </div>
         <button class="btn-download" onclick="downloadUpdatedHtml()">📥 서버 반영용 파일 다운로드</button>
     </div>
@@ -222,6 +223,7 @@
 
     <footer>
         <p>&copy; 2026 <span id="footer-name" contenteditable="false">YES DESIGN</span>. All rights reserved.</p>
+        <div class="hidden-trigger" onclick="toggleAdminMode()">●</div>
     </footer>
 
     <script>
@@ -239,25 +241,25 @@
         };
 
         window.onload = function() {
-            // 텍스트 복구
+            // 사이트 데이터 원격 복구 연동
             const savedTexts = JSON.parse(localStorage.getItem('siteTexts')) || defaultTexts;
             Object.keys(defaultTexts).forEach(id => {
                 const el = document.getElementById(id);
                 if(el) {
-                    if(el.innerText === defaultTexts[id] && savedTexts[id]) {
+                    if((el.innerText === defaultTexts[id] || el.innerText === '') && savedTexts[id]) {
                         el.innerText = savedTexts[id];
                     }
                 }
             });
 
-            // 색상 복구
+            // 색상 레이아웃 복구 연동
             const mainColor = localStorage.getItem('mainColor') || '#1a2a3a';
             const pointColor = localStorage.getItem('pointColor') || '#c5a880';
             document.getElementById('mainColorPicker').value = mainColor;
             document.getElementById('pointColorPicker').value = pointColor;
             setCSSVariables(mainColor, pointColor);
 
-            // 포트폴리오 데이터 복구
+            // 포트폴리오 안전 기본값 스토리지 연동
             if (!localStorage.getItem('portfolios')) {
                 localStorage.setItem('portfolios', JSON.stringify([
                     { id: 1, title: '역삼동 아파트 리모델링', desc: '클릭해서 제목을 수정하세요' },
@@ -282,25 +284,19 @@
             isEditMode = !isEditMode;
             const body = document.body;
             const panel = document.getElementById('adminPanel');
-            const toggleBtn = document.getElementById('admin-toggle-btn');
 
             if (isEditMode) {
                 body.classList.add('edit-mode');
                 panel.style.display = 'block';
-                toggleBtn.innerText = "📁 편집모드 종료 (반영)";
-                toggleBtn.style.background = "#d9534f";
-                toggleBtn.style.color = "white";
                 
                 Object.keys(defaultTexts).forEach(id => {
                     const el = document.getElementById(id);
                     if(el) el.contentEditable = "true";
                 });
+                alert("🔓 실시간 인라인 편집 빌더가 활성화되었습니다.\n\n수정이 끝나면 빌더 창의 [변경사항 최종 저장] 및 다운로드 버튼을 눌러주세요!");
             } else {
                 body.classList.remove('edit-mode');
                 panel.style.display = 'none';
-                toggleBtn.innerText = "관리자 편집모드 켜기";
-                toggleBtn.style.background = "none";
-                toggleBtn.style.color = "#777";
                 
                 Object.keys(defaultTexts).forEach(id => {
                     const el = document.getElementById(id);
@@ -374,11 +370,10 @@
             localStorage.setItem('mainColor', document.getElementById('mainColorPicker').value);
             localStorage.setItem('pointColor', document.getElementById('pointColorPicker').value);
 
-            alert('💾 변경 내용이 정상 저장되었습니다.\n\n다른 사람들에게도 동일하게 보이고 모바일 반영을 완료하려면 아래 [서버 반영용 파일 다운로드] 버튼을 눌러 GitHub을 업데이트 해주세요!');
-            if(isEditMode) toggleAdminMode();
+            alert('💾 변경 내용이 임시 세션에 세팅되었습니다.\n\n서버 및 모바일에 영구 반영을 완성하기 위해 하단 빌더의 [서버 반영용 파일 다운로드] 버튼을 실행하여 GitHub에 새로 업로드해 주세요!');
         }
 
-        // 수정한 디자인 테마색, 포인트 컬러, 텍스트 일체를 HTML 내부 소스코드에 영구 인젝션하여 추출해주는 모듈 함수
+        // 브라우저 런타임 상의 가상 빌더 메모리 상태를 HTML 정합 소스에 매핑 및 영구 인젝션 가공해 뽑아내는 컴파일 코어 엔진
         function downloadUpdatedHtml() {
             const textData = {};
             Object.keys(defaultTexts).forEach(id => {
@@ -391,7 +386,7 @@
 
             let currentHtml = document.documentElement.outerHTML;
 
-            // 초기 텍스트 정밀 주입 연동
+            // 텍스트 매직 매핑 매칭
             const textRegex = /const defaultTexts = \{[\s\S]*?\};/;
             let newTextString = `const defaultTexts = {\n`;
             Object.keys(textData).forEach((key, idx, arr) => {
@@ -400,12 +395,12 @@
             newTextString += `        };`;
             currentHtml = currentHtml.replace(textRegex, newTextString);
 
-            // 포트폴리오 배열 주입 연동
+            // 포트폴리오 객체 동적 트레이싱 연동
             const portRegex = /localStorage\.setItem\('portfolios', JSON\.stringify\(\[[\s\S]*?\]\)\);/;
             const newPortString = `localStorage.setItem('portfolios', JSON.stringify(${portfolios}));`;
             currentHtml = currentHtml.replace(portRegex, newPortString);
 
-            // 로드 타임 기본 세팅 색상값 주입 연동
+            // 컴파일 로드 타임 고정 컬러 인젝션
             const mainColorRegex = /const mainColor = localStorage\.getItem\('mainColor'\) \|\| '.*?';/;
             const newMainColorString = `const mainColor = localStorage.getItem('mainColor') || '${mainColor}';`;
             currentHtml = currentHtml.replace(mainColorRegex, newMainColorString);
@@ -414,7 +409,7 @@
             const newPointColorString = `const pointColor = localStorage.getItem('pointColor') || '${pointColor}';`;
             currentHtml = currentHtml.replace(pointColorRegex, newPointColorString);
 
-            // 다운로드 실행 구조 설계
+            // 안전한 로컬 가상 다운로드 브릿지 개설
             const blob = new Blob(["<!DOCTYPE html>\n" + currentHtml], { type: "text/html;charset=utf-8" });
             const link = document.createElement("a");
             link.href = URL.createObjectURL(blob);
