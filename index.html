@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <style>
-        /* 프리미엄 미니멀 스타일 초기화 */
+        /* 기본 프리미엄 스타일 초기화 */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Noto Sans KR', sans-serif; line-height: 1.7; color: #222; background-color: #fafafa; transition: background 0.3s; letter-spacing: -0.02em; }
         a { text-decoration: none; color: inherit; }
@@ -21,11 +21,11 @@
             border-radius: 4px;
         }
 
-        /* 하이엔드 플로팅 헤더 네비게이션 (전달해주신 고유 이미지 대응) */
+        /* 하이엔드 플로팅 헤더 네비게이션 */
         header { position: fixed; top: 0; width: 100%; background-color: rgba(255, 255, 255, 0.98); display: flex; justify-content: space-between; align-items: center; padding: 1.8rem 10%; border-bottom: 1px solid #f0f0f0; z-index: 1000; backdrop-filter: blur(10px); }
         .logo { display: inline-block; cursor: pointer; transition: opacity 0.2s; user-select: none; }
         .logo:hover { opacity: 0.8; }
-        .logo img { max-height: 45px; width: auto; display: block; object-fit: contain; }
+        .logo img { max-height: 40px; width: auto; display: block; object-fit: contain; }
         
         nav { display: flex; align-items: center; }
         nav .menu-item { margin-left: 3.5rem; font-weight: 500; color: #555; transition: color 0.3s; cursor: pointer; font-size: 0.95rem; letter-spacing: 1px; position: relative; padding: 5px 0; }
@@ -33,139 +33,109 @@
         nav .menu-item:hover::after, nav .menu-item.active::after { width: 100%; left: 0; }
         nav .menu-item:hover, nav .menu-item.active { color: var(--point-color, #c5a880); }
 
-        /* 독립 화면 라우팅 시스템 뷰포트 코어 */
-        .page-view { display: none; margin-top: 105px; min-height: calc(100vh - 260px); opacity: 0; transition: opacity 0.4s ease; }
+        /* 독립 라우팅 네비게이션 시스템 뷰포트 코어 */
+        .page-view { display: none; margin-top: 90px; min-height: calc(100vh - 260px); opacity: 0; transition: opacity 0.4s ease; }
         .page-view.active { display: block; opacity: 1; }
 
-        /* [1] 메인 시네마틱 히어로 비주얼 */
-        .hero { height: 75vh; background-color: var(--main-bg-color, #1a1a1a); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; padding: 0 2rem; }
+        /* 메인 시네마틱 히어로 비주얼 */
+        .hero { height: 75vh; background-color: var(--main-bg-color, #1a2a3a); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; padding: 0 2rem; }
         .hero h1 { font-size: 3.8rem; margin-bottom: 1.8rem; letter-spacing: 1px; line-height: 1.3; font-weight: 700; word-break: keep-all; }
         .hero p { font-size: 1.3rem; color: #ccc; font-weight: 300; letter-spacing: 2px; }
 
         /* 고급 서브페이지 타이틀 헤더 */
         .page-header { background-color: #ffffff; padding: 6rem 10% 5rem 10%; text-align: center; border-bottom: 1px solid #f0f0f0; margin-bottom: 5rem; }
-        .page-header h2 { font-size: 2.5rem; color: var(--main-bg-color, #1a1a1a); letter-spacing: 3px; margin-bottom: 1rem; font-weight: 900; position: relative; display: inline-block; padding-bottom: 15px; }
+        .page-header h2 { font-size: 2.5rem; color: var(--main-bg-color, #1a2a3a); letter-spacing: 3px; margin-bottom: 1rem; font-weight: 900; position: relative; display: inline-block; padding-bottom: 15px; }
         .page-header h2::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 40px; height: 2px; background-color: var(--point-color, #c5a880); }
         .page-header .section-desc { color: #888; font-size: 1.05rem; margin-top: 10px; font-weight: 300; letter-spacing: 1px; }
 
-        /* [2] 회사 소개 (ABOUT US) */
+        /* 회사 소개 (ABOUT US) */
         .about-container { max-width: 850px; margin: 0 auto 8rem auto; padding: 0 2rem; font-size: 1.2rem; color: #444; line-height: 2.2; text-align: center; word-break: keep-all; font-weight: 300; }
 
-        /* [3] 포트폴리오 (멀티 이미지 빌더 내장형 스킨) */
+        /* 포트폴리오 메인 그리드 아카이브 */
         .portfolio-container { max-width: 1300px; margin: 0 auto 8rem auto; padding: 0 2rem; }
         .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 3.5rem; }
-        .portfolio-item { background-color: #ffffff; border: 1px solid #f0f0f0; overflow: hidden; transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s; border-radius: 4px; display: flex; flex-direction: column; }
+        .portfolio-item { background-color: #ffffff; border: 1px solid #f0f0f0; overflow: hidden; transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s; border-radius: 4px; display: flex; flex-direction: column; cursor: pointer; }
         .portfolio-item:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.06); }
         
-        /* 다중 등록 이미지 슬롯 썸네일 컨테이너 */
-        .portfolio-media-box { width: 100%; height: 280px; background-color: #f7f7f7; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #f3f3f3; position: relative; overflow: hidden; }
-        .empty-media-msg { color: #aaa; font-weight: 500; font-size: 1rem; letter-spacing: 1px; }
-        
-        /* 한 카드 내부 등록 이미지 바인딩 격자 */
-        .thumb-scroll-wrap { width: 100%; height: 100%; display: grid; grid-template-columns: repeat(auto-fill, minmax(1fr, 1fr)); gap: 2px; background: #eee; }
-        .thumb-scroll-wrap.count-1 { grid-template-columns: 1fr; }
-        .thumb-scroll-wrap.count-2 { grid-template-columns: 1fr 1fr; }
-        .thumb-scroll-wrap.count-3 { grid-template-columns: 1fr 1fr 1fr; }
-        .thumb-scroll-wrap.count-4 { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); }
-        .thumb-scroll-wrap.count-5, .thumb-scroll-wrap.count-6, .thumb-scroll-wrap.count-7, .thumb-scroll-wrap.count-8, .thumb-scroll-wrap.count-9, .thumb-scroll-wrap.count-10 { grid-template-columns: repeat(3, 1fr); }
-        
-        .uploaded-thumb { width: 100%; height: 100%; object-fit: cover; cursor: pointer; transition: filter 0.2s; background: #fff; }
-        .uploaded-thumb:hover { filter: brightness(0.85); }
-        
+        /* 대표 썸네일 박스 영역 */
+        .portfolio-thumb-box { width: 100%; height: 280px; background-color: #f7f7f7; display: flex; align-items: center; justify-content: center; overflow: hidden; border-bottom: 1px solid #f3f3f3; position: relative; }
+        .portfolio-thumb-box img { width: 100%; height: 100%; object-fit: cover; }
+        .empty-thumb-msg { color: #aaa; font-weight: 500; font-size: 1rem; letter-spacing: 1px; }
+        .img-count-badge { position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.7); color: #fff; padding: 4px 10px; font-size: 0.75rem; border-radius: 20px; font-weight: 500; }
+
         .portfolio-info { padding: 2.2rem; text-align: left; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .portfolio-info h3 { font-size: 1.35rem; color: var(--main-bg-color, #1a1a1a); margin-bottom: 0.8rem; font-weight: 700; letter-spacing: -0.5px; }
+        .portfolio-info h3 { font-size: 1.35rem; color: var(--main-bg-color, #1a2a3a); margin-bottom: 0.8rem; font-weight: 700; letter-spacing: -0.5px; }
         .portfolio-info p { color: #666; font-size: 0.95rem; line-height: 1.7; font-weight: 300; margin-bottom: 1.5rem; }
 
-        /* 이미지 관리 도구 스킨 */
+        /* 이미지 업로더 빌더 제어 버튼단 */
         .img-uploader-area { margin-top: auto; padding-top: 15px; border-top: 1px dashed #eee; display: flex; flex-direction: column; gap: 8px; }
-        .file-input-label { background: #c5a880; color: #fff; text-align: center; padding: 8px; font-size: 0.8rem; border-radius: 4px; cursor: pointer; font-weight: 500; display: block; }
+        .file-input-label { background: #c5a880; color: #fff; text-align: center; padding: 9px; font-size: 0.8rem; border-radius: 4px; cursor: pointer; font-weight: 500; display: block; }
         .file-input-hidden { display: none; }
 
-        /* [4] 문의하기 (CONTACT US 비대칭 레이아웃) */
+        /* 독립 화면 전환형 포트폴리오 상세 레이아웃 스킨 */
+        .detail-back-btn { display: inline-block; background: #1a2a3a; color: #fff; padding: 12px 25px; font-size: 0.9rem; font-weight: 500; margin-bottom: 3rem; cursor: pointer; border-radius: 4px; transition: background 0.3s; }
+        .detail-back-btn:hover { background: #c5a880; }
+        .detail-gallery-container { width: 100%; display: flex; gap: 25px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 20px; margin-bottom: 3rem; scroll-behavior: smooth; }
+        .detail-gallery-container::-webkit-scrollbar { height: 8px; }
+        .detail-gallery-container::-webkit-scrollbar-thumb { background: #ddd; border-radius: 4px; }
+        .detail-slide-card { flex: 0 0 85%; max-width: 900px; height: 550px; background: #eaeaea; scroll-snap-align: center; display: flex; justify-content: center; align-items: center; overflow: hidden; border-radius: 4px; border: 1px solid #eef0f2; box-shadow: 0 10px 30px rgba(0,0,0,0.03); }
+        .detail-slide-card img { width: 100%; height: 100%; object-fit: contain; background: #fff; }
+
+        /* 문의하기 (CONTACT US) */
         .contact-container { max-width: 1150px; margin: 0 auto 8rem auto; padding: 0 2rem; display: grid; grid-template-columns: 1fr 1.3fr; gap: 6rem; }
         .contact-info { display: flex; flex-direction: column; justify-content: center; }
-        .contact-info h3 { font-size: 1.8rem; font-weight: 700; margin-bottom: 2rem; color: #1a1a1a; letter-spacing: 1px; }
+        .contact-info h3 { font-size: 1.8rem; font-weight: 700; margin-bottom: 2rem; color: #1a2a3a; letter-spacing: 1px; }
         .contact-info p { margin-bottom: 1.8rem; font-size: 1.05rem; color: #555; border-bottom: 1px solid #f0f0f0; padding-bottom: 15px; font-weight: 300; }
-        .contact-info p strong { color: var(--main-bg-color, #1a1a1a); display: inline-block; width: 110px; font-weight: 700; }
+        .contact-info p strong { color: var(--main-bg-color, #1a2a3a); display: inline-block; width: 110px; font-weight: 700; }
         .contact-form { background: #ffffff; padding: 3.5rem; border: 1px solid #eee; box-shadow: 0 10px 30px rgba(0,0,0,0.01); border-radius: 4px; }
         .form-group { margin-bottom: 2rem; }
-        .form-group label { display: block; margin-bottom: 0.8rem; font-weight: 700; color: var(--main-bg-color, #1a1a1a); font-size: 0.9rem; letter-spacing: 0.5px; }
+        .form-group label { display: block; margin-bottom: 0.8rem; font-weight: 700; color: var(--main-bg-color, #1a2a3a); font-size: 0.9rem; letter-spacing: 0.5px; }
         .form-group input, .form-group textarea { width: 100%; padding: 1.1rem; border: 1px solid #e0e0e0; font-size: 0.95rem; font-family: inherit; transition: border-color 0.3s, box-shadow 0.3s; border-radius: 2px; background-color: #fafafa; }
         .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--point-color, #c5a880); background-color: #fff; box-shadow: 0 0 0 3px rgba(197, 168, 128, 0.1); }
-        .submit-btn { width: 100%; padding: 1.3rem; background-color: var(--main-bg-color, #1a1a1a); color: white; border: none; font-size: 1.05rem; font-weight: 700; cursor: pointer; transition: background 0.3s; letter-spacing: 2px; border-radius: 2px; }
+        .submit-btn { width: 100%; padding: 1.3rem; background-color: var(--main-bg-color, #1a2a3a); color: white; border: none; font-size: 1.05rem; font-weight: 700; cursor: pointer; transition: background 0.3s; letter-spacing: 2px; border-radius: 2px; }
         .submit-btn:hover { background-color: var(--point-color, #c5a880); }
 
         /* 실시간 빌더 대시보드 관리자 패널 */
-        .admin-panel { display: none; position: fixed; bottom: 25px; right: 25px; background: #fff; border: 1px solid #1a1a1a; padding: 1.8rem; box-shadow: 0 20px 50px rgba(0,0,0,0.15); z-index: 9999; max-width: 360px; width: calc(100% - 50px); border-radius: 6px; }
-        .admin-panel h3 { margin-bottom: 1.2rem; font-size: 1.1rem; color: #1a1a1a; border-bottom: 1px solid #1a1a1a; padding-bottom: 8px; font-weight: 700; }
+        .admin-panel { display: none; position: fixed; bottom: 25px; right: 25px; background: #fff; border: 1px solid #1a2a3a; padding: 1.8rem; box-shadow: 0 20px 50px rgba(0,0,0,0.15); z-index: 9999; max-width: 360px; width: calc(100% - 50px); border-radius: 6px; }
+        .admin-panel h3 { margin-bottom: 1.2rem; font-size: 1.1rem; color: #1a2a3a; border-bottom: 1px solid #1a2a3a; padding-bottom: 8px; font-weight: 700; }
         .color-picker-group { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.2rem; }
         .color-picker-group label { font-size: 0.9rem; font-weight: 500; }
         .color-picker-group input { cursor: pointer; width: 55px; height: 32px; border: 1px solid #ddd; border-radius: 4px; }
         .admin-panel-btns { display: flex; gap: 10px; margin-top: 1.2rem; }
         .btn-save { background-color: #10b981; color: white; padding: 12px; border: none; cursor: pointer; flex: 1; font-weight: 700; text-align: center; border-radius: 4px; }
-        .btn-add-p { background-color: #1a1a1a; color: white; padding: 10px; border: none; cursor: pointer; width: 100%; margin-top: 6px; font-size: 0.85rem; font-weight: 500; border-radius: 4px; }
+        .btn-add-p { background-color: #1a2a3a; color: white; padding: 10px; border: none; cursor: pointer; width: 100%; margin-top: 6px; font-size: 0.85rem; font-weight: 500; border-radius: 4px; }
         .btn-danger { background-color: #ef4444; color: white; padding: 6px 12px; border: none; cursor: pointer; font-size: 0.85rem; width: 100%; text-align: center; border-radius: 4px; margin-top: 5px; }
         
-        /* 모달 공통 크래들 */
+        /* 모달 시스템 구조 스킨 */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10000; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
         .modal-content { background: white; padding: 3rem; width: 100%; max-width: 900px; max-height: 85vh; overflow-y: auto; text-align: left; border-radius: 4px; }
         .table-responsive { width: 100%; overflow-x: auto; margin-top: 1.5rem; }
         table { width: 100%; border-collapse: collapse; min-width: 650px; }
         th, td { padding: 14px; border: 1px solid #eee; text-align: left; font-size: 0.9rem; }
-        th { background-color: #1a1a1a; color: white; font-weight: 500; }
+        th { background-color: #1a2a3a; color: white; font-weight: 500; }
         .btn-table-del { background-color: #ef4444; color: white; padding: 4px 10px; border: none; cursor: pointer; border-radius: 2px; }
 
-        /* 가로 스크롤형 프리미엄 대형 이미지 상세 뷰어 모달 전용 스킨 */
-        .lightbox-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.92); z-index: 20000; flex-direction: column; justify-content: center; align-items: center; backdrop-filter: blur(8px); }
-        .lightbox-close { position: absolute; top: 25px; right: 35px; color: #fff; font-size: 2.5rem; cursor: pointer; user-select: none; z-index: 20002; transition: transform 0.2s; }
-        .lightbox-close:hover { transform: scale(1.1); }
-        .lightbox-slider-container { width: 100%; max-width: 1100px; height: 75vh; display: flex; align-items: center; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 20px; gap: 40px; scroll-behavior: smooth; }
-        /* 크롬/사파리 스크롤바 미니멀 히든 스킨 */
-        .lightbox-slider-container::-webkit-scrollbar { height: 6px; }
-        .lightbox-slider-container::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
-        .lightbox-slide { flex: 0 0 100%; height: 100%; display: flex; justify-content: center; align-items: center; scroll-snap-align: center; }
-        .lightbox-slide img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 2px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
-        .lightbox-hint { color: rgba(255,255,255,0.4); font-size: 0.85rem; margin-top: 15px; letter-spacing: 1px; }
+        /* 우측 하단 고정형 카카오톡 플로팅 버튼 */
+        .kakao-floating-btn { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background-color: #FEE500; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 8px 25px rgba(0,0,0,0.15); z-index: 999; cursor: pointer; transition: transform 0.3s; }
+        .kakao-floating-btn:hover { transform: scale(1.1); }
+        .kakao-floating-btn svg { width: 28px; height: 28px; fill: #3C1E1E; }
 
-        /* 👑 카카오톡 우측 하단 고정 플로팅 버튼 스킨 */
-        .kakao-floating-btn { position: fixed; bottom: 30px; right: 30px; width: 62px; height: 62px; background-color: #FEE500; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 8px 25px rgba(0,0,0,0.18); z-index: 999; cursor: pointer; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s; }
-        .kakao-floating-btn:hover { transform: scale(1.1) rotate(5deg); box-shadow: 0 12px 30px rgba(0,0,0,0.25); }
-        .kakao-floating-btn svg { width: 30px; height: 30px; fill: #3C1E1E; }
-
-        /* 하이엔드 다크 푸터 및 비밀 편집 활성화용 마침표 링크 기호 스킨 */
-        footer { background-color: var(--main-bg-color, #1a1a1a); color: #666; display: flex; justify-content: space-between; align-items: center; padding: 3rem 10%; font-size: 0.85rem; border-top: 1px solid #222; letter-spacing: 0.5px; margin-top: 0; }
-        .hidden-trigger { color: var(--main-bg-color, #1a1a1a); cursor: pointer; user-select: none; font-size: 1.1rem; padding: 5px; transition: color 0.3s; }
+        /* 하이엔드 다크 푸터 */
+        footer { background-color: var(--main-bg-color, #1a2a3a); color: #666; display: flex; justify-content: space-between; align-items: center; padding: 3rem 10%; font-size: 0.85rem; border-top: 1px solid #222; letter-spacing: 0.5px; margin-top: 0; }
+        .hidden-trigger { color: var(--main-bg-color, #1a2a3a); cursor: pointer; user-select: none; font-size: 1.1rem; padding: 5px; transition: color 0.3s; }
         .hidden-trigger:hover { color: #333; }
 
-        /* ==================================================
-           📱 럭셔리 모바일 반응형 대응 레이아웃
-        ================================================== */
+        /* 모바일 반응형 처리 단 */
         @media (max-width: 768px) {
             header { padding: 1.2rem 6%; flex-direction: column; gap: 10px; }
             nav .menu-item { margin-left: 1.5rem; font-size: 0.9rem; }
-            .logo img { max-height: 35px; }
-
-            .hero h1 { font-size: 2.4rem; margin-bottom: 1.2rem; }
-            .hero p { font-size: 1.1rem; }
-
-            .page-header { padding: 4rem 6% 3.5rem 6%; margin-bottom: 3rem; }
-            .page-header h2 { font-size: 2.1rem; }
-
-            .about-container { font-size: 1.05rem; padding: 0 1rem; margin-bottom: 5rem; }
-
-            .portfolio-container { padding: 0 1rem; margin-bottom: 5rem; }
-            .portfolio-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-            .portfolio-media-box { height: 240px; }
-
-            .contact-container { grid-template-columns: 1fr; gap: 4rem; padding: 0 1rem; margin-bottom: 5rem; }
-            .contact-info { text-align: center; }
-            .contact-info h3 { margin-bottom: 1.5rem; font-size: 1.5rem; }
-            .contact-info p strong { width: auto; margin-right: 12px; }
-            .contact-form { padding: 2.5rem 1.5rem; }
-            
-            footer { padding: 2.5rem 6%; flex-direction: column; gap: 15px; text-align: center; }
-            .kakao-floating-btn { bottom: 20px; right: 20px; width: 54px; height: 54px; }
-            .kakao-floating-btn svg { width: 26px; height: 26px; }
+            .logo img { max-height: 32px; }
+            .hero h1 { font-size: 2.4rem; }
+            .page-header { padding: 4rem 6% 3.5rem 6%; }
+            .portfolio-grid { grid-template-columns: 1fr; }
+            .detail-slide-card { flex: 0 0 95%; height: 350px; }
+            .contact-container { grid-template-columns: 1fr; gap: 4rem; }
+            footer { flex-direction: column; gap: 15px; text-align: center; }
         }
     </style>
 </head>
@@ -210,6 +180,19 @@
         </div>
     </div>
 
+    <div id="page-portfolio-detail" class="page-view">
+        <div class="page-header" style="margin-bottom:3rem;">
+            <h2 id="detail-project-title">PROJECT NAME</h2>
+            <p class="section-desc" id="detail-project-desc">프로젝트 상세 설명 구문입니다.</p>
+        </div>
+        <div class="portfolio-container" style="text-align:center;">
+            <div class="detail-back-btn" onclick="navigateTo('portfolio')">← 포트폴리오 목록으로 돌아가기</div>
+            
+            <div class="detail-gallery-container" id="detailGalleryTrack">
+                </div>
+        </div>
+    </div>
+
     <div id="page-contact" class="page-view">
         <div class="page-header">
             <h2 id="contact-title" contenteditable="false">CONTACT US</h2>
@@ -243,7 +226,7 @@
         </div>
     </div>
 
-    <div class="kakao-floating-btn" onclick="window.open('https://open.kakao.com/o/YOUR_LINK', '_blank')" title="카카오톡 1:1 실시간 상담">
+    <div class="kakao-floating-btn" onclick="window.open('https://open.kakao.com/o/YOUR_CHAT_LINK', '_blank')" title="카카오톡 1:1 상담">
         <svg viewBox="0 0 24 24">
             <path d="M12 3c-4.97 0-9 3.185-9 7.115 0 2.553 1.706 4.8 4.315 6.074-.18.667-.648 2.408-.743 2.775-.12.467.168.46.354.336.146-.097 2.336-1.587 3.284-2.221.57.08 1.161.121 1.79.121 4.97 0 9-3.186 9-7.115C21 6.185 16.97 3 12 3z"/>
         </svg>
@@ -288,16 +271,9 @@
         </div>
     </div>
 
-    <div class="lightbox-modal" id="lightboxModal">
-        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
-        <div class="lightbox-slider-container" id="lightboxSlider">
-            </div>
-        <div class="lightbox-hint">← 마우스로 드래그하거나 제스처로 좌우 스크롤하여 넘겨보세요 →</div>
-    </div>
-
     <footer>
         <p>&copy; 2026 <span id="footer-name" contenteditable="false">YES DESIGN</span>. All rights reserved.</p>
-        <div class="hidden-trigger" onclick="toggleAdminMode()">●</div>
+        <div class="hidden-trigger" onclick="checkAdminPassword()">●</div>
     </footer>
 
     <script>
@@ -313,16 +289,14 @@
             "footer-name": "YES DESIGN"
         };
 
-        // 다중 독립 화면 완벽 제어 라우팅 함수
+        // 라우팅 제어 함수
         function navigateTo(pageId) {
-            if(isEditMode) return; // 편집 모드 중에는 안전한 전체 뷰 유지를 위해 라우팅 비활성화
+            if(isEditMode && pageId !== 'portfolio') return; 
             document.querySelectorAll('.page-view').forEach(view => view.classList.remove('active'));
             document.querySelectorAll('nav .menu-item').forEach(item => item.classList.remove('active'));
 
             const targetPage = document.getElementById('page-' + pageId);
-            if (targetPage) {
-                targetPage.classList.add('active');
-            }
+            if (targetPage) targetPage.classList.add('active');
 
             if (pageId === 'about') document.getElementById('menu1').classList.add('active');
             if (pageId === 'portfolio') document.getElementById('menu2').classList.add('active');
@@ -332,21 +306,18 @@
         }
 
         window.onload = function() {
-            // 사이트 내 텍스트 즉각 복구 및 렌더링
             const savedTexts = JSON.parse(localStorage.getItem('siteTexts')) || defaultTexts;
             Object.keys(defaultTexts).forEach(id => {
                 const el = document.getElementById(id);
                 if(el && savedTexts[id]) el.innerText = savedTexts[id];
             });
 
-            // 관리자 설정 테마 색상 동기화 복구
-            const mainColor = localStorage.getItem('mainColor') || '#1a1a1a';
+            const mainColor = localStorage.getItem('mainColor') || '#1a2a3a';
             const pointColor = localStorage.getItem('pointColor') || '#c5a880';
             document.getElementById('mainColorPicker').value = mainColor;
             document.getElementById('pointColorPicker').value = pointColor;
             setCSSVariables(mainColor, pointColor);
 
-            // 포트폴리오 초기 더미 가구축
             if (!localStorage.getItem('portfolios')) {
                 localStorage.setItem('portfolios', JSON.stringify([
                     { id: 1, title: '역삼동 하이엔드 아파트 리모델링', desc: '미니멀한 직선 요소를 극대화하여 완성한 럭셔리 주거 공간입니다.', images: [] },
@@ -367,6 +338,20 @@
             setCSSVariables(main, point);
         }
 
+        // 🔐 보안 비밀번호 검증 수행
+        function checkAdminPassword() {
+            if(isEditMode) {
+                toggleAdminMode();
+                return;
+            }
+            const pwd = prompt("관리자 보안 비밀번호를 입력해 주세요:");
+            if(pwd === "##joo1207") {
+                toggleAdminMode();
+            } else if(pwd !== null) {
+                alert("❌ 비밀번호가 올바르지 않습니다. 접근 권한이 거부되었습니다.");
+            }
+        }
+
         function toggleAdminMode() {
             isEditMode = !isEditMode;
             const body = document.body;
@@ -375,18 +360,16 @@
             if (isEditMode) {
                 body.classList.add('edit-mode');
                 panel.style.display = 'block';
-                
                 document.querySelectorAll('.page-view').forEach(view => view.classList.add('active'));
                 
                 Object.keys(defaultTexts).forEach(id => {
                     const el = document.getElementById(id);
                     if(el) el.contentEditable = "true";
                 });
-                alert("🔓 디자인 편집모드가 켜졌습니다.\n글자를 수정하시거나 포트폴리오 사진 카드를 직접 편집해 보세요.");
+                alert("🔓 보안 인증 완료. 디자인 빌더가 활성화되었습니다.");
             } else {
                 body.classList.remove('edit-mode');
                 panel.style.display = 'none';
-                
                 Object.keys(defaultTexts).forEach(id => {
                     const el = document.getElementById(id);
                     if(el) el.contentEditable = "false";
@@ -397,23 +380,27 @@
             renderPortfolio();
         }
 
+        // 고유 ID 기반 렌더링으로 꼬임 전면 차단
         function renderPortfolio() {
             const portfolios = JSON.parse(localStorage.getItem('portfolios')) || [];
             const container = document.getElementById('portfolio-list');
             container.innerHTML = '';
 
-            portfolios.forEach((item, index) => {
+            portfolios.forEach((item) => {
                 const itemDiv = document.createElement('div');
                 itemDiv.className = 'portfolio-item';
                 
-                // 등록된 멀티 이미지 썸네일 바인딩 처리
-                let mediaBoxInner = `<span class="empty-media-msg">YES DESIGN ARCHIVE</span>`;
+                itemDiv.onclick = function(e) {
+                    if(isEditMode || e.target.tagName === 'LABEL' || e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON') return;
+                    const currentPortfolios = JSON.parse(localStorage.getItem('portfolios')) || [];
+                    const currentIdx = currentPortfolios.findIndex(p => p.id === item.id);
+                    if (currentIdx !== -1) openPortfolioDetail(currentIdx);
+                };
+
+                let thumbInner = `<span class="empty-thumb-msg">YES DESIGN ARCHIVE</span>`;
                 if(item.images && item.images.length > 0) {
-                    mediaBoxInner = `<div class="thumb-scroll-wrap count-${item.images.length}">`;
-                    item.images.forEach((imgSrc) => {
-                        mediaBoxInner += `<img src="${imgSrc}" class="uploaded-thumb" onclick="openLightbox(${index})">`;
-                    });
-                    mediaBoxInner += `</div>`;
+                    thumbInner = `<img src="${item.images[0]}" alt="${item.title}">
+                                  <span class="img-count-badge">＋${item.images.length}장</span>`;
                 }
 
                 let adminToolsHtml = '';
@@ -421,21 +408,19 @@
                     adminToolsHtml = `
                         <div class="img-uploader-area">
                             <label class="file-input-label" for="file-${item.id}">📷 사진 추가 (${item.images ? item.images.length : 0}/10장)</label>
-                            <input type="file" id="file-${item.id}" class="file-input-hidden" accept="image/*" onchange="handleImageUpload(event, ${item.id})">
-                            <button class="btn-danger" style="padding:4px; font-size:0.75rem;" onclick="clearImages(${item.id})">사진 전체 초기화</button>
-                            <button class="btn-danger" onclick="deletePortfolio(${item.id})">이 포트폴리오 카드 삭제</button>
+                            <input type="file" id="file-${item.id}" class="file-input-hidden" accept="image/*" onchange="handleCompressedUpload(event, ${item.id})">
+                            <button class="btn-danger" style="padding:4px; font-size:0.75rem;" onclick="clearImages(${item.id}); event.stopPropagation();">사진 초기화</button>
+                            <button class="btn-danger" onclick="deletePortfolio(${item.id}); event.stopPropagation();">이 카드 삭제</button>
                         </div>
                     `;
                 }
                 
                 itemDiv.innerHTML = `
-                    <div class="portfolio-media-box">
-                        ${mediaBoxInner}
-                    </div>
+                    <div class="portfolio-thumb-box">${thumbInner}</div>
                     <div class="portfolio-info">
                         <div>
-                            <h3 id="p-title-${index}" contenteditable="${isEditMode}">${item.title}</h3>
-                            <p id="p-desc-${index}" contenteditable="${isEditMode}">${item.desc}</p>
+                            <h3 id="p-title-${item.id}" contenteditable="${isEditMode}">${item.title}</h3>
+                            <p id="p-desc-${item.id}" contenteditable="${isEditMode}">${item.desc}</p>
                         </div>
                         ${adminToolsHtml}
                     </div>
@@ -444,27 +429,47 @@
             });
         }
 
-        // 실시간 독립 이미지 파일 인코딩 및 최대 10장 제약 트래커
-        function handleImageUpload(event, id) {
+        // 이미지 실시간 압축 엔진
+        function handleCompressedUpload(event, id) {
             const file = event.target.files[0];
             if (!file) return;
 
             let portfolios = JSON.parse(localStorage.getItem('portfolios')) || [];
             const targetIdx = portfolios.findIndex(p => p.id === id);
             if (targetIdx === -1) return;
-
-            if(!portfolios[targetIdx].images) portfolios[targetIdx].images = [];
+            if (!portfolios[targetIdx].images) portfolios[targetIdx].images = [];
             
             if(portfolios[targetIdx].images.length >= 10) {
-                alert("⚠️ 사진은 한 프로젝트 카드당 최대 10장까지만 등록 가능합니다.");
+                alert("⚠️ 사진은 프로젝트당 최대 10장까지만 등록할 수 있습니다.");
                 return;
             }
 
             const reader = new FileReader();
             reader.onload = function(e) {
-                portfolios[targetIdx].images.push(e.target.result);
-                localStorage.setItem('portfolios', JSON.stringify(portfolios));
-                renderPortfolio();
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const MAX_WIDTH = 1000; 
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > MAX_WIDTH) {
+                        height *= MAX_WIDTH / width;
+                        width = MAX_WIDTH;
+                    }
+                    canvas.width = width;
+                    canvas.height = height;
+
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.75);
+                    
+                    portfolios[targetIdx].images.push(compressedDataUrl);
+                    localStorage.setItem('portfolios', JSON.stringify(portfolios));
+                    renderPortfolio();
+                };
+                img.src = e.target.result;
             };
             reader.readAsDataURL(file);
         }
@@ -477,6 +482,30 @@
                 localStorage.setItem('portfolios', JSON.stringify(portfolios));
                 renderPortfolio();
             }
+        }
+
+        function openPortfolioDetail(portfolioIndex) {
+            const portfolios = JSON.parse(localStorage.getItem('portfolios')) || [];
+            const project = portfolios[portfolioIndex];
+            if(!project) return;
+
+            document.getElementById('detail-project-title').innerText = project.title;
+            document.getElementById('detail-project-desc').innerText = project.desc;
+
+            const track = document.getElementById('detailGalleryTrack');
+            track.innerHTML = '';
+
+            if(!project.images || project.images.length === 0) {
+                track.innerHTML = `<div style="color:#aaa; width:100%; padding:4rem 0;">등록된 시공 사례 이미지가 없습니다.</div>`;
+            } else {
+                project.images.forEach(src => {
+                    const slide = document.createElement('div');
+                    slide.className = 'detail-slide-card';
+                    slide.innerHTML = `<img src="${src}" alt="YES DESIGN ARCHIVE">`;
+                    track.appendChild(slide);
+                });
+            }
+            navigateTo('portfolio-detail');
         }
 
         function addNewPortfolioCard() {
@@ -498,32 +527,7 @@
             renderPortfolio();
         }
 
-        // 🖼️ 가로 슬라이딩 감성 라이트박스 뷰어 오픈
-        function openLightbox(portfolioIndex) {
-            if(isEditMode) return; // 편집 도중에는 트리거 방지
-            const portfolios = JSON.parse(localStorage.getItem('portfolios')) || [];
-            const targetItem = portfolios[portfolioIndex];
-            if(!targetItem || !targetItem.images || targetItem.images.length === 0) return;
-
-            const slider = document.getElementById('lightboxSlider');
-            slider.innerHTML = '';
-
-            targetItem.images.forEach(src => {
-                const slide = document.createElement('div');
-                slide.className = 'lightbox-slide';
-                slide.innerHTML = `<img src="${src}" alt="YES DESIGN">`;
-                slider.appendChild(slide);
-            });
-
-            document.getElementById('lightboxModal').style.display = 'flex';
-            slider.scrollLeft = 0; // 첫 사진 정렬 스냅 조율
-        }
-
-        function closeLightbox() {
-            document.getElementById('lightboxModal').style.display = 'none';
-        }
-
-        // 실시간 화면 즉시 반영 연동 세이브 코어 (새로고침 없이 인터페이스 즉시 싱크동기화)
+        // 고유 ID 명확 매핑 저장 로직으로 교체 완료
         function saveAllChanges() {
             const textData = {};
             Object.keys(defaultTexts).forEach(id => {
@@ -533,9 +537,9 @@
             localStorage.setItem('siteTexts', JSON.stringify(textData));
 
             const portfolios = JSON.parse(localStorage.getItem('portfolios')) || [];
-            portfolios.forEach((item, index) => {
-                const titleEl = document.getElementById(`p-title-${index}`);
-                const descEl = document.getElementById(`p-desc-${index}`);
+            portfolios.forEach((item) => {
+                const titleEl = document.getElementById(`p-title-${item.id}`);
+                const descEl = document.getElementById(`p-desc-${item.id}`);
                 if(titleEl && descEl) {
                     item.title = titleEl.innerText;
                     item.desc = descEl.innerText;
@@ -546,7 +550,7 @@
             localStorage.setItem('mainColor', document.getElementById('mainColorPicker').value);
             localStorage.setItem('pointColor', document.getElementById('pointColorPicker').value);
 
-            alert('💾 등록하신 사진과 수정된 모든 텍스트가 홈페이지에 실시간 즉시 반영 및 저장되었습니다!');
+            alert('💾 모든 데이터와 이미지가 실시간 반영 및 최종 저장되었습니다!');
             if(isEditMode) toggleAdminMode();
         }
 
