@@ -52,6 +52,19 @@
         /* 회사 소개 (ABOUT US) */
         .about-container { max-width: 850px; margin: 0 auto 8rem auto; padding: 0 2rem; font-size: 1.2rem; color: #444; line-height: 2.2; text-align: center; word-break: keep-all; font-weight: 300; }
 
+        /* 오시는길 (LOCATION) 디자인 레이아웃 */
+        .location-container { max-width: 900px; margin: 0 auto 8rem auto; padding: 0 2rem; text-align: center; }
+        .map-shortcut-box { background: #ffffff; border: 1px solid #eef0f2; border-radius: 6px; padding: 3.5rem 2rem; box-shadow: 0 15px 35px rgba(0,0,0,0.03); margin-bottom: 3.5rem; }
+        .map-shortcut-box h3 { font-size: 1.5rem; color: #1a2a3a; margin-bottom: 1rem; font-weight: 700; }
+        .map-shortcut-box p { color: #666; font-size: 1.05rem; margin-bottom: 2rem; font-weight: 300; }
+        .btn-naver-map { display: inline-flex; align-items: center; gap: 10px; background-color: #03C75A; color: #ffffff; padding: 15px 35px; font-size: 1.05rem; font-weight: 700; border-radius: 4px; transition: background 0.3s, transform 0.2s; box-shadow: 0 5px 15px rgba(3, 199, 90, 0.2); }
+        .btn-naver-map:hover { background-color: #02b34f; transform: translateY(-2px); }
+        
+        .route-guide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; text-align: left; }
+        .route-card { background: #ffffff; border: 1px solid #eee; padding: 2.5rem; border-radius: 4px; }
+        .route-card h4 { font-size: 1.2rem; color: var(--main-bg-color, #1a2a3a); margin-bottom: 1rem; font-weight: 700; display: flex; align-items: center; gap: 8px; border-bottom: 2px solid var(--point-color, #c5a880); padding-bottom: 8px; }
+        .route-card p { font-size: 0.95rem; color: #555; line-height: 1.8; font-weight: 300; word-break: keep-all; }
+
         /* 포트폴리오 메인 그리드 아카이브 */
         .portfolio-container { max-width: 1300px; margin: 0 auto 8rem auto; padding: 0 2rem; }
         .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 3.5rem; }
@@ -77,7 +90,7 @@
         .detail-back-btn { display: inline-block; background: #1a2a3a; color: #fff; padding: 12px 25px; font-size: 0.9rem; font-weight: 500; margin-bottom: 3rem; cursor: pointer; border-radius: 4px; transition: background 0.3s; user-select: none; }
         .detail-back-btn:hover { background: #c5a880; }
         
-        /* 🛠️ [구조 고도화] 양방향 화살표 제어형 슬라이더 프레임 극대화 */
+        /* 양방향 화살표 제어형 슬라이더 프레임 극대화 */
         .slider-outer-wrapper { 
             position: relative; 
             max-width: 960px; 
@@ -89,7 +102,7 @@
         .detail-gallery-container { 
             width: 100%; 
             display: flex; 
-            overflow: hidden; /* 스크롤바 완전 차단 */
+            overflow: hidden; 
             scroll-behavior: smooth;
             border-radius: 6px; 
             border: 1px solid #eef0f2; 
@@ -97,7 +110,7 @@
         }
         
         .detail-slide-card { 
-            flex: 0 0 100%; /* 무조건 정확히 한 장 크기로 고정 매핑 */
+            flex: 0 0 100%; 
             width: 100%;
             height: 600px; 
             background: #ffffff; 
@@ -227,6 +240,7 @@
             .slider-arrow-btn { background: rgba(26, 42, 58, 0.6); width: 40px; height: 40px; font-size: 1rem; }
             .slider-arrow-btn.prev { left: 10px; }
             .slider-arrow-btn.next { right: 10px; }
+            .route-guide-grid { grid-template-columns: 1fr; gap: 1.5rem; }
             .contact-container { grid-template-columns: 1fr; gap: 4rem; }
             footer { flex-direction: column; gap: 15px; text-align: center; }
         }
@@ -240,6 +254,7 @@
         </div>
         <nav>
             <span class="menu-item" id="menu1" onclick="navigateTo('about')">회사소개</span>
+            <span class="menu-item" id="menu-loc" onclick="navigateTo('location')">오시는길</span>
             <span class="menu-item" id="menu2" onclick="navigateTo('portfolio')">포트폴리오</span>
             <span class="menu-item" id="menu3" onclick="navigateTo('contact')">문의하기</span>
         </nav>
@@ -258,7 +273,35 @@
             <p class="section-desc" id="about-sub" contenteditable="false">우리가 추구하는 가치를 소개합니다.</p>
         </div>
         <div class="about-container">
-            <p id="about-text" contenteditable="false">안녕하세요. YES DESIGN입니다. 저희는 트렌디함과 실용성을 겸비한 공간을 창조하는 인테리어 전문 기업입니다. 단순한 시공을 넘어, 그 공간에 머무는 사람들의 이야기와 행복을 담아내고자 노력합니다. 주거 공간부터 상업 공간까지 최고의 전문가들이 책임지고 디자인해 드립니다.</p>
+            <p id="about-text" contenteditable="false">안녕하세요. YES DESIGN입니다. 저희는 트렌디함และ 실용성을 겸비한 공간을 창조하는 인테리어 전문 기업입니다. 단순한 시공을 넘어, 그 공간에 머무는 사람들의 이야기와 행복을 담아내고자 노력합니다. 주거 공간부터 상업 공간까지 최고의 전문가들이 책임지고 디자인해 드립니다.</p>
+        </div>
+    </div>
+
+    <!-- 🗺️ 신규 추가: 오시는길 독립 페이지 뷰 -->
+    <div id="page-location" class="page-view">
+        <div class="page-header">
+            <h2 id="location-title" contenteditable="false">LOCATION</h2>
+            <p class="section-desc" id="location-sub" contenteditable="false">YES DESIGN으로 찾아오시는 편리한 길을 안내합니다.</p>
+        </div>
+        <div class="location-container">
+            <div class="map-shortcut-box">
+                <h3 id="loc-box-title" contenteditable="false">네이버 지도 연동 가이드</h3>
+                <p id="loc-box-desc" contenteditable="false">아래 버튼을 클릭하시면 실시간 교통정보 및 정확한 위경도 좌표가 매핑된 네이버 지도 공식 페이지로 즉시 연결되어 길찾기가 한층 편리해집니다.</p>
+                <a href="https://map.naver.com/p/entry/place/1237368875?c=18.25,0,0,0,dh&placePath=/home?from=map&fromPanelNum=1&additionalHeight=76&timestamp=202606161514&locale=ko&svcName=map_pcv5" target="_blank" class="btn-naver-map">
+                    🗺️ 네이버 지도로 길찾기 (새창)
+                </a>
+            </div>
+            
+            <div class="route-guide-grid">
+                <div class="route-card">
+                    <h4>🚇 지하철 / 대중교통 이용 시</h4>
+                    <p id="loc-route-subway" contenteditable="false">가장 가까운 지하철역 하차 후 2번 출구에서 도보 약 5분 거리입니다. 출구 정면에서 직진 후 첫 번째 사거리 코너에서 우회전하시면 본관 건물이 위치해 있습니다.</p>
+                </div>
+                <div class="route-card">
+                    <h4>🚗 자가용 / 주차 안내</h4>
+                    <p id="loc-route-car" contenteditable="false">네이버 지도에 'YES DESIGN'을 검색하여 오시면 편리합니다. 건물 지하 1층부터 지하 3층까지 방문객 전용 여유로운 주차 공간이 완비되어 있으며, 상담 고객에게는 무료 주차권이 발급됩니다.</p>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -283,7 +326,6 @@
         <div class="portfolio-container" style="text-align:center;">
             <div class="detail-back-btn" onclick="navigateTo('portfolio')">← 포트폴리오 목록으로 돌아가기</div>
             
-            <!-- 🛠️ 양방향 화살표 제어형 슬라이더 래퍼 트랙 스킨 -->
             <div class="slider-outer-wrapper">
                 <button class="slider-arrow-btn prev" id="sliderPrevBtn" onclick="moveSlider(-1)">←</button>
                 
@@ -294,7 +336,6 @@
                 <button class="slider-arrow-btn next" id="sliderNextBtn" onclick="moveSlider(1)">→</button>
             </div>
             
-            <!-- 하단 실시간 넘버링 카운터 배지 -->
             <div class="slider-counter-badge" id="sliderCounter">0 / 0</div>
         </div>
     </div>
@@ -385,14 +426,18 @@
     <script>
         let isEditMode = false;
         
-        // 🛠️ 슬라이더 전역 인덱싱 상태 관리 변수
         let currentSlideIndex = 0;
         let totalSlidesCount = 0;
 
+        // 오시는길 텍스트 필드를 기본 구조에 매핑 (안정적인 데이터 입출력)
         const defaultTexts = {
             "hero-title": "공간에 가치를 더하다", "hero-desc": "YES DESIGN이 제안하는 프리미엄 인테리어 디자인",
             "about-title": "ABOUT US", "about-sub": "우리가 추구하는 가치를 소개합니다.",
             "about-text": "안녕하세요. YES DESIGN입니다. 저희는 트렌디함과 실용성을 겸비한 공간을 창조하는 인테리어 전문 기업입니다. 단순한 시공을 넘어, 그 공간에 머무는 사람들의 이야기와 행복을 담아내고자 노력합니다. 주거 공간부터 상업 공간까지 최고의 전문가들이 책임지고 디자인해 드립니다.",
+            "location-title": "LOCATION", "location-sub": "YES DESIGN으로 찾아오시는 편리한 길을 안내합니다.",
+            "loc-box-title": "네이버 지도 연동 가이드", "loc-box-desc": "아래 버튼을 클릭하시면 실시간 교통정보 및 정확한 위경도 좌표가 매핑된 네이버 지도 공식 페이지로 즉시 연결되어 길찾기가 한층 편리해집니다.",
+            "loc-route-subway": "가장 가까운 지하철역 하차 후 2번 출구에서 도보 약 5분 거리입니다. 출구 정면에서 직진 후 첫 번째 사거리 코너에서 우회전하시면 본관 건물이 위치해 있습니다.",
+            "loc-route-car": "네이버 지도에 'YES DESIGN'을 검색하여 오시면 편리합니다. 건물 지하 1층부터 지하 3층까지 방문객 전용 여유로운 주차 공간이 완비되어 있으며, 상담 고객에게는 무료 주차권이 발급됩니다.",
             "port-title": "PORTFOLIO", "port-sub": "YES DESIGN의 최근 시공 사례입니다.",
             "contact-title": "CONTACT US", "contact-sub": "상담 및 견적 문의를 남겨주시면 신속히 답변해 드리겠습니다.",
             "info-name": "YES DESIGN", "info-addr": "서울시 강남구 테헤란로 123", "info-tel": "02-1234-5678", "info-email": "contact@yesdesign.com",
@@ -408,6 +453,7 @@
             if (targetPage) targetPage.classList.add('active');
 
             if (pageId === 'about') document.getElementById('menu1').classList.add('active');
+            if (pageId === 'location') document.getElementById('menu-loc').classList.add('active');
             if (pageId === 'portfolio') document.getElementById('menu2').classList.add('active');
             if (pageId === 'contact') document.getElementById('menu3').classList.add('active');
             
@@ -618,7 +664,6 @@
             }
         }
 
-        /* 🛠️ [개편] 원장 1장 단위 고정식 상세 모듈 */
         function openPortfolioDetail(portfolioIndex) {
             const portfolios = JSON.parse(localStorage.getItem('portfolios')) || [];
             const project = portfolios[portfolioIndex];
@@ -630,7 +675,6 @@
             const track = document.getElementById('detailGalleryTrack');
             track.innerHTML = '';
             
-            // 인덱싱 전역 스코프 초기화
             currentSlideIndex = 0; 
             totalSlidesCount = project.images ? project.images.length : 0;
 
@@ -647,13 +691,11 @@
                     track.appendChild(slide);
                 });
                 
-                // 첫 진입 시점 버튼 스태틱 및 넘버 배지 제어
                 updateSliderUIVisual();
             }
             navigateTo('portfolio-detail');
         }
 
-        /* 🛠️ 화살표 클릭에 기반한 원스톱 넘기기 연산 장치 */
         function moveSlider(direction) {
             const track = document.getElementById('detailGalleryTrack');
             const targetIndex = currentSlideIndex + direction;
@@ -661,7 +703,6 @@
             if (targetIndex >= 0 && targetIndex < totalSlidesCount) {
                 currentSlideIndex = targetIndex;
                 
-                // 가로 폭을 정교하게 계산하여 정확히 한 장 크기만큼 강제 트랙 이동시킴
                 const cardWidth = track.clientWidth;
                 track.scrollTo({
                     left: currentSlideIndex * cardWidth,
@@ -672,7 +713,6 @@
             }
         }
 
-        /* 🛠️ 버튼 활성화 가드 및 하단 넘버링 상태 디스플레이 제어 유틸 */
         function updateSliderUIVisual() {
             document.getElementById('sliderCounter').innerText = `${currentSlideIndex + 1} / ${totalSlidesCount}`;
             
