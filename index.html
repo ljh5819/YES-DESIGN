@@ -73,50 +73,96 @@
         .file-input-label { background: #c5a880; color: #fff; text-align: center; padding: 9px; font-size: 0.8rem; border-radius: 4px; cursor: pointer; font-weight: 500; display: block; }
         .file-input-hidden { display: none; }
 
-        /* 독립 화면 전환형 포트폴리오 상세 가로 스크롤 레이아웃 */
+        /* 독립 화면 전환형 포트폴리오 상세 레이아웃 */
         .detail-back-btn { display: inline-block; background: #1a2a3a; color: #fff; padding: 12px 25px; font-size: 0.9rem; font-weight: 500; margin-bottom: 3rem; cursor: pointer; border-radius: 4px; transition: background 0.3s; user-select: none; }
         .detail-back-btn:hover { background: #c5a880; }
         
-        /* 부드러운 하이엔드 가로 슬라이더 컨테이너 오버플로우 트랙 */
+        /* 🛠️ [구조 고도화] 양방향 화살표 제어형 슬라이더 프레임 극대화 */
+        .slider-outer-wrapper { 
+            position: relative; 
+            max-width: 960px; 
+            margin: 0 auto 1.5rem auto; 
+            display: flex; 
+            align-items: center; 
+        }
+        
         .detail-gallery-container { 
             width: 100%; 
             display: flex; 
-            gap: 30px; 
-            overflow-x: auto; 
-            overflow-y: hidden;
-            scroll-snap-type: x mandatory; 
-            padding: 10px 0 30px 0; 
-            margin-bottom: 3rem; 
+            overflow: hidden; /* 스크롤바 완전 차단 */
             scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
+            border-radius: 6px; 
+            border: 1px solid #eef0f2; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.04);
         }
-        .detail-gallery-container::-webkit-scrollbar { height: 8px; }
-        .detail-gallery-container::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
-        .detail-gallery-container::-webkit-scrollbar-thumb { background: #c5a880; border-radius: 10px; }
         
-        /* 개별 대형 슬라이드 카드 - 찌그러짐 철저 방지(flex-shrink: 0) */
         .detail-slide-card { 
-            flex: 0 0 85%; 
+            flex: 0 0 100%; /* 무조건 정확히 한 장 크기로 고정 매핑 */
             width: 100%;
-            max-width: 960px; 
             height: 600px; 
             background: #ffffff; 
-            scroll-snap-align: center; 
             display: flex; 
             justify-content: center; 
             align-items: center; 
             overflow: hidden; 
-            border-radius: 6px; 
-            border: 1px solid #eef0f2; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.04); 
         }
-        /* 이미지 원본 비율 완전 보존 및 풀스케일 매핑 */
+        
         .detail-slide-card img { 
             width: 100%; 
             height: 100%; 
             object-fit: contain; 
             background: #fafafa;
             display: block;
+        }
+
+        /* 프리미엄 플로팅 화살표 버튼 커스텀 스킨 */
+        .slider-arrow-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 55px;
+            height: 55px;
+            background: rgba(26, 42, 58, 0.85);
+            color: #ffffff;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.4rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            transition: background 0.3s, transform 0.2s, opacity 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            user-select: none;
+        }
+        .slider-arrow-btn:hover {
+            background: var(--point-color, #c5a880);
+        }
+        .slider-arrow-btn:active {
+            transform: translateY(-50%) scale(0.92);
+        }
+        .slider-arrow-btn.prev { left: -75px; }
+        .slider-arrow-btn.next { right: -75px; }
+        .slider-arrow-btn:disabled {
+            background: #e0e0e0;
+            color: #aaaaaa;
+            cursor: not-allowed;
+            box-shadow: none;
+            opacity: 0.4;
+        }
+
+        /* 하단 슬라이드 컷 넘버 카운터 */
+        .slider-counter-badge {
+            display: inline-block;
+            background: #1a2a3a;
+            color: #fff;
+            padding: 6px 16px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 30px;
+            letter-spacing: 1px;
+            margin-bottom: 3rem;
         }
 
         /* 문의하기 (CONTACT US) */
@@ -142,7 +188,6 @@
         .admin-panel-btns { display: flex; gap: 10px; margin-top: 1.2rem; }
         .btn-save { background-color: #10b981; color: white; padding: 12px; border: none; cursor: pointer; flex: 1; font-weight: 700; text-align: center; border-radius: 4px; }
         .btn-add-p { background-color: #1a2a3a; color: white; padding: 10px; border: none; cursor: pointer; width: 100%; margin-top: 6px; font-size: 0.85rem; font-weight: 500; border-radius: 4px; }
-        .btn-add-p style="background-color:#555;" { background-color: #555; }
         .btn-danger { background-color: #ef4444; color: white; padding: 6px 12px; border: none; cursor: pointer; font-size: 0.85rem; width: 100%; text-align: center; border-radius: 4px; margin-top: 5px; }
         
         /* 모달 시스템 구조 스킨 */
@@ -165,6 +210,11 @@
         .hidden-trigger:hover { color: #333; }
 
         /* 모바일 반응형 처리 단 */
+        @media (max-width: 1100px) {
+            .slider-outer-wrapper { max-width: 85%; }
+            .slider-arrow-btn.prev { left: -50px; width:45px; height:45px; }
+            .slider-arrow-btn.next { right: -50px; width:45px; height:45px; }
+        }
         @media (max-width: 768px) {
             header { padding: 1.2rem 6%; flex-direction: column; gap: 10px; }
             nav .menu-item { margin-left: 1.5rem; font-size: 0.9rem; }
@@ -172,7 +222,11 @@
             .hero h1 { font-size: 2.4rem; }
             .page-header { padding: 4rem 6% 3.5rem 6%; }
             .portfolio-grid { grid-template-columns: 1fr; }
-            .detail-slide-card { flex: 0 0 92%; height: 380px; }
+            .slider-outer-wrapper { max-width: 100%; }
+            .detail-slide-card { height: 380px; }
+            .slider-arrow-btn { background: rgba(26, 42, 58, 0.6); width: 40px; height: 40px; font-size: 1rem; }
+            .slider-arrow-btn.prev { left: 10px; }
+            .slider-arrow-btn.next { right: 10px; }
             .contact-container { grid-template-columns: 1fr; gap: 4rem; }
             footer { flex-direction: column; gap: 15px; text-align: center; }
         }
@@ -220,6 +274,7 @@
         </div>
     </div>
 
+    <!-- 포트폴리오 개별 독립 상세 전용 뷰 화면단 -->
     <div id="page-portfolio-detail" class="page-view">
         <div class="page-header" style="margin-bottom:2rem;">
             <h2 id="detail-project-title">PROJECT NAME</h2>
@@ -227,9 +282,20 @@
         </div>
         <div class="portfolio-container" style="text-align:center;">
             <div class="detail-back-btn" onclick="navigateTo('portfolio')">← 포트폴리오 목록으로 돌아가기</div>
-            <div class="detail-gallery-container" id="detailGalleryTrack">
-                <!-- 멀티 이미지 채워짐 -->
+            
+            <!-- 🛠️ 양방향 화살표 제어형 슬라이더 래퍼 트랙 스킨 -->
+            <div class="slider-outer-wrapper">
+                <button class="slider-arrow-btn prev" id="sliderPrevBtn" onclick="moveSlider(-1)">←</button>
+                
+                <div class="detail-gallery-container" id="detailGalleryTrack">
+                    <!-- 멀티 이미지가 스크롤바 없이 풀스크린 배치됨 -->
+                </div>
+                
+                <button class="slider-arrow-btn next" id="sliderNextBtn" onclick="moveSlider(1)">→</button>
             </div>
+            
+            <!-- 하단 실시간 넘버링 카운터 배지 -->
+            <div class="slider-counter-badge" id="sliderCounter">0 / 0</div>
         </div>
     </div>
 
@@ -318,6 +384,10 @@
 
     <script>
         let isEditMode = false;
+        
+        // 🛠️ 슬라이더 전역 인덱싱 상태 관리 변수
+        let currentSlideIndex = 0;
+        let totalSlidesCount = 0;
 
         const defaultTexts = {
             "hero-title": "공간에 가치를 더하다", "hero-desc": "YES DESIGN이 제안하는 프리미엄 인테리어 디자인",
@@ -442,7 +512,6 @@
 
                 let adminToolsHtml = '';
                 if(isEditMode) {
-                    /* 🛠️ 컴퓨터 다중 파일 선택을 위한 multiple 속성 삽입 */
                     adminToolsHtml = `
                         <div class="img-uploader-area">
                             <label class="file-input-label" for="file-${item.id}">📷 사진 다중등록 (${item.images ? item.images.length : 0}/10장)</label>
@@ -467,7 +536,6 @@
             });
         }
 
-        /* 🛠️ 비동기 안전 순차식 10장 일괄 다중 업로드 모듈 */
         async function handleMultipleCompressedUpload(event, id) {
             const files = Array.from(event.target.files);
             if (files.length === 0) return;
@@ -483,7 +551,6 @@
                 return;
             }
 
-            // 남은 슬롯 계산 후 초과분 제외
             const maxAvailable = 10 - currentCount;
             let filesToUpload = files;
             if (files.length > maxAvailable) {
@@ -491,13 +558,10 @@
                 filesToUpload = files.slice(0, maxAvailable);
             }
 
-            // 파일 처리 중 UI 락 안내
             const labelEl = event.target.previousElementSibling;
-            const originalText = labelEl.innerText;
             labelEl.innerText = "⏳ 고성능 압축 인코딩 중...";
             labelEl.style.background = "#555";
 
-            // 순차 비동기 압축 큐 루프 실행
             for (const file of filesToUpload) {
                 try {
                     const compressedDataUrl = await compressImageAsync(file);
@@ -507,13 +571,11 @@
                 }
             }
 
-            // 최종 갱신 보관
             localStorage.setItem('portfolios', JSON.stringify(portfolios));
             renderPortfolio();
-            alert("✅ 선택하신 모든 사진이 왜곡 없이 부드러운 가로 스크롤 앨범에 완벽 등록되었습니다!");
+            alert("✅ 선택하신 모든 사진이 완벽히 저장되었습니다!");
         }
 
-        /* 프로미스 기반 싱글 이미지 Canvas 압축기 */
         function compressImageAsync(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
@@ -521,7 +583,7 @@
                     const img = new Image();
                     img.onload = function() {
                         const canvas = document.createElement('canvas');
-                        const MAX_WIDTH = 1200; // 왜곡 깨짐 방지 해상도 비율 
+                        const MAX_WIDTH = 1200; 
                         let width = img.width;
                         let height = img.height;
 
@@ -535,7 +597,6 @@
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0, width, height);
 
-                        // 압축률 0.75로 세팅하여 브라우저 저장공간 과부하 방지
                         const dataUrl = canvas.toDataURL('image/jpeg', 0.75);
                         resolve(dataUrl);
                     };
@@ -557,6 +618,7 @@
             }
         }
 
+        /* 🛠️ [개편] 원장 1장 단위 고정식 상세 모듈 */
         function openPortfolioDetail(portfolioIndex) {
             const portfolios = JSON.parse(localStorage.getItem('portfolios')) || [];
             const project = portfolios[portfolioIndex];
@@ -567,9 +629,16 @@
 
             const track = document.getElementById('detailGalleryTrack');
             track.innerHTML = '';
+            
+            // 인덱싱 전역 스코프 초기화
+            currentSlideIndex = 0; 
+            totalSlidesCount = project.images ? project.images.length : 0;
 
-            if(!project.images || project.images.length === 0) {
+            if(totalSlidesCount === 0) {
                 track.innerHTML = `<div style="color:#aaa; width:100%; padding:5rem 0;">등록된 시공 사례 이미지가 없습니다.</div>`;
+                document.getElementById('sliderPrevBtn').disabled = true;
+                document.getElementById('sliderNextBtn').disabled = true;
+                document.getElementById('sliderCounter').innerText = "0 / 0";
             } else {
                 project.images.forEach(src => {
                     const slide = document.createElement('div');
@@ -577,8 +646,38 @@
                     slide.innerHTML = `<img src="${src}" alt="YES DESIGN ARCHIVE">`;
                     track.appendChild(slide);
                 });
+                
+                // 첫 진입 시점 버튼 스태틱 및 넘버 배지 제어
+                updateSliderUIVisual();
             }
             navigateTo('portfolio-detail');
+        }
+
+        /* 🛠️ 화살표 클릭에 기반한 원스톱 넘기기 연산 장치 */
+        function moveSlider(direction) {
+            const track = document.getElementById('detailGalleryTrack');
+            const targetIndex = currentSlideIndex + direction;
+            
+            if (targetIndex >= 0 && targetIndex < totalSlidesCount) {
+                currentSlideIndex = targetIndex;
+                
+                // 가로 폭을 정교하게 계산하여 정확히 한 장 크기만큼 강제 트랙 이동시킴
+                const cardWidth = track.clientWidth;
+                track.scrollTo({
+                    left: currentSlideIndex * cardWidth,
+                    behavior: 'smooth'
+                });
+                
+                updateSliderUIVisual();
+            }
+        }
+
+        /* 🛠️ 버튼 활성화 가드 및 하단 넘버링 상태 디스플레이 제어 유틸 */
+        function updateSliderUIVisual() {
+            document.getElementById('sliderCounter').innerText = `${currentSlideIndex + 1} / ${totalSlidesCount}`;
+            
+            document.getElementById('sliderPrevBtn').disabled = (currentSlideIndex === 0);
+            document.getElementById('sliderNextBtn').disabled = (currentSlideIndex === totalSlidesCount - 1);
         }
 
         function addNewPortfolioCard() {
