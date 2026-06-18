@@ -112,7 +112,7 @@
         }
         header.sub-page-mode .menu-item::after { background-color: var(--color-yes-orange) !important; }
 
-        /* 모바일 화면 최적화 미디어 쿼리 (화면 폭 640px 이하) */
+        /* 모바일 화면 최적화 미디어 쿼리 */
         @media (max-width: 640px) {
             header.main-home-mode { padding-top: 2rem !important; }
             header.main-home-mode .logo-img { height: 65px !important; }
@@ -189,7 +189,7 @@
 
     <header id="main-header" class="main-home-mode">
         <div class="logo-container cursor-pointer" onclick="showPage('home')">
-            <img src="img/logo.png?v=2026" class="logo-img" alt="YES DESIGN" onerror="this.src='https://ljh5819.github.io/YES-DESIGN/img/logo.png?v=2026'">
+            <img src="logo.png?v=2026" class="logo-img" alt="YES DESIGN" onerror="this.src='https://ljh5819.github.io/YES-DESIGN/logo.png?v=2026'">
         </div>
         <nav>
             <span class="menu-item" onclick="showPage('about')">회사소개</span>
@@ -338,11 +338,20 @@
         </div>
     </div>
 
-    <div id="lightbox-modal" class="hidden fixed inset-0 bg-black/90 flex items-center justify-center p-4 z-[100]" onclick="closeLightbox()">
-        <button class="absolute top-5 right-5 text-white text-2xl hover:text-gray-300 transition" onclick="closeLightbox()">
+    <div id="lightbox-modal" class="hidden fixed inset-0 bg-black/95 flex items-center justify-center p-4 z-[100]" onclick="closeLightbox()">
+        <button class="absolute top-5 right-5 text-white text-3xl hover:text-gray-300 transition z-[110]" onclick="closeLightbox()">
             <i class="fas fa-times"></i>
         </button>
-        <img id="lightbox-img" src="" class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl" onclick="event.stopPropagation()">
+        
+        <button id="lightbox-prev" class="hidden absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl hover:bg-black/80 transition z-[110]" onclick="lightboxPrev(event)">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        
+        <img id="lightbox-img" src="" class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl select-none" onclick="event.stopPropagation()">
+        
+        <button id="lightbox-next" class="hidden absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl hover:bg-black/80 transition z-[110]" onclick="lightboxNext(event)">
+            <i class="fas fa-chevron-right"></i>
+        </button>
     </div>
 
     <script>
@@ -353,6 +362,9 @@
 
         let kakaoUrl = "https://pf.kakao.com";
         let currentAdmin = false;
+        let portfolioData = {}; // 확대보기 연동용 전역 데이터 저장소
+        let lightboxImages = [];
+        let lightboxCurrentIdx = 0;
 
         // 즉시 탭 전환 보장 독립 함수
         function showPage(pageId) {
@@ -388,31 +400,66 @@
             }
         });
 
-        // 원본 이미지 라이트박스 팝업 열기/닫기
-        function openLightbox(src) {
+        // 원본 이미지 라이트박스 팝업 (이전/다음 연동 기능 추가)
+        function openLightbox(key, idx) {
+            if (!portfolioData[key] || !portfolioData[key].images) return;
+            lightboxImages = portfolioData[key].images;
+            lightboxCurrentIdx = idx;
+
             const modal = document.getElementById('lightbox-modal');
             const img = document.getElementById('lightbox-img');
             if (modal && img) {
-                img.src = src;
+                img.src = lightboxImages[lightboxCurrentIdx];
                 modal.classList.remove('hidden');
-                document.body.style.overflow = 'hidden'; // 팝업 시 뒷배경 스크롤 방지
+                document.body.style.overflow = 'hidden';
+                updateLightboxArrows();
             }
         }
+
         function closeLightbox() {
             const modal = document.getElementById('lightbox-modal');
             if (modal) {
                 modal.classList.add('hidden');
-                document.body.style.overflow = ''; // 스크롤 복구
+                document.body.style.overflow = '';
             }
         }
 
-        // 독립형 포트폴리오 안전 렌더링 함수 (확대 보기 이벤트 및 커서 바인딩)
+        function updateLightboxArrows() {
+            const prevBtn = document.getElementById('lightbox-prev');
+            const nextBtn = document.getElementById('lightbox-next');
+            if (!prevBtn || !nextBtn) return;
+            if (lightboxImages.length > 1) {
+                prevBtn.classList.remove('hidden');
+                nextBtn.classList.remove('hidden');
+            } else {
+                prevBtn.classList.add('hidden');
+                nextBtn.classList.add('hidden');
+            }
+        }
+
+        function lightboxNext(e) {
+            if (e) e.stopPropagation();
+            if (lightboxImages.length <= 1) return;
+            lightboxCurrentIdx = (lightboxCurrentIdx + 1) % lightboxImages.length;
+            document.getElementById('lightbox-img').src = lightboxImages[lightboxCurrentIdx];
+        }
+
+        function lightboxPrev(e) {
+            if (e) e.stopPropagation();
+            if (lightboxImages.length <= 1) return;
+            lightboxCurrentIdx = (lightboxCurrentIdx - 1 + lightboxImages.length) % lightboxImages.length;
+            document.getElementById('lightbox-img').src = lightboxImages[lightboxCurrentIdx];
+        }
+
+        // 포트폴리오 렌더링 함수
         function renderPortfolio() {
             database.ref('portfolio').once('value', (snapshot) => {
                 const grid = document.getElementById('portfolio-grid');
                 if(!grid) return;
                 grid.innerHTML = '';
                 const data = snapshot.val();
+                portfolioData = data || {}; // 전역 변수에 바인딩하여 팝업과 연결
+                
                 if (data) {
                     Object.keys(data).reverse().forEach(key => {
                         const card = data[key];
@@ -420,8 +467,8 @@
                         if (card.images && card.images.length > 0) {
                             card.images.forEach((img, idx) => {
                                 dotsHtml += `<span class="w-1.5 h-1.5 rounded-full bg-white/60 ${idx===0?'!bg-white':''}" data-dot="${key}-${idx}"></span>`;
-                                // 이미지 클릭 시 openLightbox 호출 및 크로스 브라우저 돋보기 커서(cursor-zoom-in) 부여
-                                slidesHtml += `<img src="${img}" class="w-full h-56 md:h-64 object-cover flex-shrink-0 cursor-zoom-in ${idx===0?'':'hidden'}" data-slide="${key}-${idx}" onclick="openLightbox('${img}')">`;
+                                // 이미지 클릭 시 openLightbox(키값, 인덱스) 호출 연동 및 돋보기 커서 부여
+                                slidesHtml += `<img src="${img}" class="w-full h-56 md:h-64 object-cover flex-shrink-0 cursor-zoom-in ${idx===0?'':'hidden'}" data-slide="${key}-${idx}" onclick="openLightbox('${key}', ${idx})">`;
                             });
                         }
                         
@@ -435,9 +482,9 @@
                                 <div class="relative overflow-hidden">
                                     <div class="flex" id="slider-${key}">${slidesHtml}</div>
                                     ${card.images && card.images.length > 1 ? `
-                                        <button onclick="prevSlide('${key}', ${card.images.length})" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 text-white w-7 h-7 rounded-full flex items-center justify-center"><i class="fas fa-chevron-left text-xxs"></i></button>
-                                        <button onclick="nextSlide('${key}', ${card.images.length})" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/40 text-white w-7 h-7 rounded-full flex items-center justify-center"><i class="fas fa-chevron-right text-xxs"></i></button>
-                                        <div class="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">${dotsHtml}</div>
+                                        <button onclick="prevSlide('${key}', ${card.images.length}); event.stopPropagation();" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 text-white w-7 h-7 rounded-full flex items-center justify-center z-10"><i class="fas fa-chevron-left text-xxs"></i></button>
+                                        <button onclick="nextSlide('${key}', ${card.images.length}); event.stopPropagation();" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/40 text-white w-7 h-7 rounded-full flex items-center justify-center z-10"><i class="fas fa-chevron-right text-xxs"></i></button>
+                                        <div class="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 z-10">${dotsHtml}</div>
                                     ` : ''}
                                 </div>
                                 <div class="p-4 md:p-5">
@@ -483,6 +530,7 @@
             });
         }
 
+        // [체크] 관리자 페이지 무한 새로고침 현상 전면 제거
         async function submitCard() {
             if (!currentAdmin) { alert("권한이 없습니다."); return; }
             const title = document.getElementById('card-title').value;
@@ -497,10 +545,12 @@
             }
             
             database.ref('portfolio').push({ title: title, desc: desc, images: compressedImages }).then(() => {
-                alert("시공사례가 정상 등록되었습니다. 페이지가 새로고침되며 홈으로 이동합니다."); 
+                alert("시공사례가 정상 등록되었습니다."); 
                 closeUploadModal();
-                document.getElementById('card-title').value = ''; document.getElementById('card-desc').value = ''; fileInput.value = '';
-                location.reload();
+                document.getElementById('card-title').value = ''; 
+                document.getElementById('card-desc').value = ''; 
+                fileInput.value = '';
+                // location.reload() 제거 -> 파이어베이스 실시간 수신기가 화면만 즉시 갱신
             });
         }
 
@@ -509,7 +559,7 @@
             if (confirm("이 시공사례를 정말 삭제하시겠습니까?")) {
                 database.ref('portfolio/' + key).remove().then(() => {
                     alert("삭제되었습니다.");
-                    location.reload();
+                    // location.reload() 제거 -> 실시간 UI 갱신
                 });
             }
         }
@@ -556,8 +606,8 @@
                 mapUrl: document.getElementById('input-map-url').value,
                 kakaoUrl: document.getElementById('input-kakao-url').value
             }).then(() => {
-                alert("서버 설정 업데이트 완료! 안전을 위해 페이지가 새로고침됩니다.");
-                location.reload();
+                alert("서버 설정 업데이트 완료!");
+                // location.reload() 제거 -> 로그인 유지 및 텍스트만 실시간 변경
             });
         }
 
@@ -577,14 +627,16 @@
             if (!currentAdmin) return;
             if(confirm("모든 시공사례 데이터를 초기화하시겠습니까?")) {
                 database.ref('portfolio').remove().then(() => {
-                    location.reload();
+                    alert("초기화가 완료되었습니다.");
                 });
             }
         }
         
         function closeAdmin() { 
+            currentAdmin = false;
             document.getElementById('admin-panel').classList.add('hidden'); 
-            location.reload();
+            document.getElementById('admin-add-btn').classList.add('hidden'); 
+            renderPortfolio(); // 관리자 툴바를 닫으면 휴지통 버튼 제거 렌더링
         }
         function openUploadModal() { document.getElementById('upload-modal').classList.remove('hidden'); }
         function closeUploadModal() { document.getElementById('upload-modal').classList.add('hidden'); }
