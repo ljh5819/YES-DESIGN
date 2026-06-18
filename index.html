@@ -13,8 +13,8 @@
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
         
         :root {
-            --color-bg-mi: #FAF7EC;     /* 예스디자인 고유 미색 */
-            --color-yes-orange: #E86624; /* 공식 시그니처 오렌지 */
+            --color-bg-mi: #FAF7EC;     /* 은은하고 따뜻한 미색 바탕 고정 */
+            --color-yes-orange: #E86624; /* 예스디자인 공식 시그니처 주황색 */
             --font-main: 'Noto Sans KR', sans-serif;
         }
 
@@ -112,7 +112,7 @@
         }
         header.sub-page-mode .menu-item::after { background-color: var(--color-yes-orange) !important; }
 
-        /* 모바일 최적화 미디어 쿼리 */
+        /* 모바일 화면 최적화 미디어 쿼리 (화면 폭 640px 이하) */
         @media (max-width: 640px) {
             header.main-home-mode { padding-top: 2rem !important; }
             header.main-home-mode .logo-img { height: 65px !important; }
@@ -120,12 +120,18 @@
                 margin: 6px 0.8rem !important;
                 font-size: 0.95rem !important;
             }
-            header.sub-page-mode { padding: 0.8rem 1rem !important; }
+            header.sub-page-mode {
+                padding: 0.8rem 1rem !important;
+            }
             header.sub-page-mode .logo-img { height: 32px !important; }
-            header.sub-page-mode .menu-item { margin-left: 0.8rem !important; font-size: 0.85rem !important; }
+            header.sub-page-mode .menu-item {
+                margin-left: 0.8rem !important;
+                font-size: 0.85rem !important;
+            }
             .sub-padding { padding-top: 80px; }
         }
 
+        /* 공통 네비게이션 효과 */
         .menu-item {
             position: relative;
             cursor: pointer;
@@ -183,7 +189,7 @@
 
     <header id="main-header" class="main-home-mode">
         <div class="logo-container cursor-pointer" onclick="showPage('home')">
-            <img src="logo.png?v=2026" class="logo-img" alt="YES DESIGN" onerror="this.src='img/logo.png?v=2026'">
+            <img src="img/logo.png?v=2026" class="logo-img" alt="YES DESIGN" onerror="this.src='https://ljh5819.github.io/YES-DESIGN/img/logo.png?v=2026'">
         </div>
         <nav>
             <span class="menu-item" onclick="showPage('about')">회사소개</span>
@@ -218,10 +224,10 @@
             </div>
         </div>
 
-        <div class="bg-white h-80 rounded-xl flex flex-col justify-center items-center p-4 text-center border border-gray-100 shadow-sm">
+        <div class="bg-gray-100 h-80 rounded-xl flex flex-col justify-center items-center p-4 text-center border">
             <i class="fas fa-map-marked-alt text-4xl text-gray-400 mb-3"></i>
             <p class="text-sm text-gray-600 font-medium mb-4">아래 버튼을 누르시면 네이버 지도로 상세한 위치 및 길 찾기가 가능합니다.</p>
-            <a id="db-map-url" href="https://map.naver.com/p/entry/place/1237368875" target="_blank" class="px-5 py-2.5 text-white text-sm font-medium rounded-lg shadow-md hover:opacity-90 transition" style="background-color: var(--color-yes-orange);">
+            <a id="db-map-url" href="https://map.naver.com/p/entry/place/1237368875?c=18.28,0,0,0,dh&placePath=/home?from=map&fromPanelNum=1&additionalHeight=76&timestamp=202606171338&locale=ko&svcName=map_pcv5" target="_blank" class="px-5 py-2.5 text-white text-sm font-medium rounded-lg shadow-md hover:opacity-90 transition" style="background-color: var(--color-yes-orange);">
                 <i class="fas fa-navigation mr-1"></i>네이버 지도로 위치 보기
             </a>
         </div>
@@ -234,7 +240,8 @@
                 <i class="fas fa-plus mr-1"></i>추가
             </button>
         </div>
-        <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        </div>
     </div>
 
     <div id="page-contact" class="page-view sub-padding max-w-5xl mx-auto px-6 py-12">
@@ -332,6 +339,7 @@
     </div>
 
     <script>
+        // 파이어베이스 데이터베이스 초기화
         const firebaseConfig = { databaseURL: "https://yesdesign-e3e26-default-rtdb.firebaseio.com/" };
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
@@ -339,7 +347,7 @@
         let kakaoUrl = "https://pf.kakao.com";
         let currentAdmin = false;
 
-        // 즉각적인 탭 전환 독립 함수
+        // [핵심 조치]: 파이어베이스 지연에 영향을 받지 않고 즉시 탭 전환을 보장하는 최우선 독립 함수
         function showPage(pageId) {
             document.querySelectorAll('.page-view').forEach(view => {
                 view.classList.remove('active');
@@ -361,7 +369,7 @@
             window.scrollTo({ top: 0, behavior: 'instant' });
         }
 
-        // 실시간 정보 연동 독립 수신 처리
+        // 데이터 비동기식 독립 처리 수신 단선
         database.ref('site_content').on('value', (snapshot) => {
             const data = snapshot.val();
             if (data) {
@@ -373,7 +381,7 @@
             }
         });
 
-        // 캐러셀 지원 포트폴리오 안전 렌더링 함수
+        // 독립형 포트폴리오 안전 렌더링 함수
         function renderPortfolio() {
             database.ref('portfolio').once('value', (snapshot) => {
                 const grid = document.getElementById('portfolio-grid');
@@ -429,10 +437,9 @@
             if(targetSlide) targetSlide.classList.remove('hidden');
             if(targetDot) targetDot.classList.add('!bg-white');
         }
-        function nextSlide(key, total) { if (!slideTracker[key]) slideTracker[key] = 0; slideTracker[key] = (slideTracker[key] + 1) % total; showSlide(key, slideTracker[key]); }
-        function prevSlide(key, total) { if (!slideTracker[key]) slideTracker[key] = 0; slideTracker[key] = (slideTracker[key] - 1 + total) % total; showSlide(key, slideTracker[key]); }
+        function nextSlide(key, total) { if (slideTracker[key] === undefined) slideTracker[key] = 0; slideTracker[key] = (slideTracker[key] + 1) % total; showSlide(key, slideTracker[key]); }
+        function prevSlide(key, total) { if (slideTracker[key] === undefined) slideTracker[key] = 0; slideTracker[key] = (slideTracker[key] - 1 + total) % total; showSlide(key, slideTracker[key]); }
 
-        // 클라이언트 하드웨어 연동 이미지 압축 처리 엔진
         function resizeAndCompressImage(file) {
             return new Promise((resolve) => {
                 const reader = new FileReader(); reader.readAsDataURL(file);
@@ -464,15 +471,20 @@
             }
             
             database.ref('portfolio').push({ title: title, desc: desc, images: compressedImages }).then(() => {
-                alert("시공사례가 정상 등록되었습니다."); closeUploadModal();
+                alert("시공사례가 정상 등록되었습니다. 페이지가 새로고침되며 홈으로 이동합니다."); 
+                closeUploadModal();
                 document.getElementById('card-title').value = ''; document.getElementById('card-desc').value = ''; fileInput.value = '';
+                location.reload(); // 업로드 성공 후 즉시 자동 새로고침(권한 해제 및 메인 복귀)
             });
         }
 
         function deleteCard(key) { 
             if (!currentAdmin) return;
             if (confirm("이 시공사례를 정말 삭제하시겠습니까?")) {
-                database.ref('portfolio/' + key).remove().then(() => alert("삭제되었습니다."));
+                database.ref('portfolio/' + key).remove().then(() => {
+                    alert("삭제되었습니다.");
+                    location.reload(); // 삭제 완료 후에도 자동 새로고침 처리하여 잠금 유지
+                });
             }
         }
 
@@ -498,7 +510,7 @@
                         container.innerHTML += `
                             <div class="bg-gray-50 p-4 rounded-xl border relative">
                                 <button onclick="deleteConsult('${key}')" class="absolute top-3 right-3 text-red-500 text-xs hover:underline">삭제</button>
-                                <p class="text-[10px] text-gray-400 mb-1">${item.date}</p>
+                                <p class="text-xxs text-gray-400 mb-1">${item.date}</p>
                                 <p class="text-xs font-bold text-gray-800">${item.name} (${item.tel})</p>
                                 <p class="text-xs text-gray-600 mt-1.5 bg-white p-2.5 rounded border whitespace-pre-wrap">${item.memo}</p>
                             </div>`;
@@ -517,7 +529,10 @@
                 aboutText: document.getElementById('input-about-text').value,
                 mapUrl: document.getElementById('input-map-url').value,
                 kakaoUrl: document.getElementById('input-kakao-url').value
-            }).then(() => alert("서버 설정 업데이트 완료!"));
+            }).then(() => {
+                alert("서버 설정 업데이트 완료! 안전을 위해 페이지가 새로고침됩니다.");
+                location.reload(); // 설정 수정 완료 후 즉시 자동 새로고침(권한 해제 및 메인 복귀)
+            });
         }
 
         function triggerAdmin() {
@@ -534,10 +549,17 @@
 
         function resetPortfolioData() { 
             if (!currentAdmin) return;
-            if(confirm("모든 시공사례 데이터를 초기화하시겠습니까?")) database.ref('portfolio').remove(); 
+            if(confirm("모든 시공사례 데이터를 초기화하시겠습니까?")) {
+                database.ref('portfolio').remove().then(() => {
+                    location.reload();
+                });
+            }
         }
         
-        function closeAdmin() { document.getElementById('admin-panel').classList.add('hidden'); }
+        function closeAdmin() { 
+            document.getElementById('admin-panel').classList.add('hidden'); 
+            location.reload(); // 관리자 창을 수동으로 닫을 때도 확실한 권한 잠금을 위해 새로고침 처리
+        }
         function openUploadModal() { document.getElementById('upload-modal').classList.remove('hidden'); }
         function closeUploadModal() { document.getElementById('upload-modal').classList.add('hidden'); }
         function closeConsultListModal() { document.getElementById('consult-list-modal').classList.add('hidden'); }
